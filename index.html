@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Mobile + Safari Friendly Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>Nirali's Henna Order</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Flatpickr Calendar -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #faf4ef;
+            margin: 0;
+            padding: 0;
+            color: #4a3b2f;
+            -webkit-text-size-adjust: 100%; /* Prevent Safari zooming text */
+        }
+
+        header {
+            background: #8b5e3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 42px;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-family: 'Great Vibes', cursive;
+            font-size: 28px;
+            margin-top: 5px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            border-left: none;
+            padding-left: 10px;
+            font-size: 22px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #c7b8a3;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #8b5e3c;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            margin-top: 20px;
+            width: 100%;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent; /* Fix iPhone tap highlight */
+        }
+
+        button:hover {
+            background: #6e472d;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+        }
+
+        .gallery {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gallery img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #d8c7b8;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 34px;
+            }
+            .subtitle {
+                font-size: 22px;
+            }
+            .gallery img {
+                width: 90px;
+                height: 90px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Nirali's Henna Order</h1>
+    <p class="subtitle">Book your beautiful henna design for any occasion</p>
+</header>
+
+<div class="container">
+    <h2>Design Gallery</h2>
+    <div class="gallery">
+        <img src="https://via.placeholder.com/120?text=Design+1" alt="Design 1">
+        <img src="https://via.placeholder.com/120?text=Design+2" alt="Design 2">
+        <img src="https://via.placeholder.com/120?text=Design+3" alt="Design 3">
+        <img src="https://via.placeholder.com/120?text=Design+4" alt="Design 4">
+    </div>
+
+    <h2>Order Form</h2>
+    <form id="hennaForm">
+
+        <label>Name</label>
+        <input id="name" type="text" placeholder="Your full name" required>
+
+        <label>Phone Number</label>
+        <input id="phone" type="tel" placeholder="Your phone number" required>
+
+        <label>Preferred Date & Time</label>
+        <input id="datetime" type="text" placeholder="Select date & time" required>
+
+        <label>Henna Style</label>
+        <select id="style" required>
+            <option value="">Select style</option>
+            <option>Bridal Full</option>
+            <option>Bridal Half</option>
+            <option>Arabic</option>
+            <option>Traditional</option>
+            <option>Minimal</option>
+            <option>Free style</option>
+            <option>Personal Selected design</option>
+            <option>Other</option>
+        </select>
+
+        <label>Additional Notes</label>
+        <textarea id="notes" rows="4" placeholder="Describe your preferred design or placement"></textarea>
+
+        <button type="submit">Submit Order</button>
+
+        <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">Send via WhatsApp</button>
+    </form>
+</div>
+
+<script>
+    // Date + Time Picker (Safari Friendly)
+    flatpickr("#datetime", {
+        enableTime: true,
+        dateFormat: "Y-m-d h:i K",
+        minDate: "today",
+        time_24hr: false,
+        disableMobile: true  // Forces flatpickr on iPhone instead of native picker
+    });
+
+    // WhatsApp Auto Message
+    function sendWhatsApp() {
+		const name = document.getElementById("name").value;
+		const phone = document.getElementById("phone").value;
+		const datetime = document.getElementById("datetime").value;
+		const style = document.getElementById("style").value;
+		const notes = document.getElementById("notes").value;
+
+		const message =
+			`Hello, I would like to book a henna appointment.%0A` +
+			`Name: ${name}%0A` +
+			`Phone: ${phone}%0A` +
+			`Preferred Date & Time: ${datetime}%0A` +
+			`Style: ${style}%0A` +
+			`Notes: ${notes}`;
+
+		const whatsappNumber = "7279676639";
+
+		window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+		// Reset form after sending WhatsApp message
+		document.getElementById("hennaForm").reset();
+}
+
+	document.getElementById("hennaForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // stop page reload
+    this.reset();       // clear all fields
+    alert("Form submitted successfully!"); // optional message
+});
+
+</script>
+
+</body>
+</html>

@@ -145,19 +145,19 @@
     </div>
 
     <h2>Order Form</h2>
-    <form id="hennaForm">
+    <form id="hennaForm" action="https://formspree.io/f/YOUR_ID" method="POST">
 
         <label>Name</label>
-        <input id="name" type="text" placeholder="Your full name" required>
+        <input id="name" name="name" type="text" placeholder="Your full name" required>
 
         <label>Phone Number</label>
-        <input id="phone" type="tel" placeholder="Your phone number" required>
+        <input id="phone" name="phone" type="tel" placeholder="Your phone number" required>
 
         <label>Preferred Date & Time</label>
-        <input id="datetime" type="text" placeholder="Select date & time" required>
+        <input id="datetime" name="datetime" type="text" placeholder="Select date & time" required>
 
         <label>Henna Style</label>
-        <select id="style" required>
+        <select id="style" name="style" required>
             <option value="">Select style</option>
             <option>Bridal Full</option>
             <option>Bridal Half</option>
@@ -170,7 +170,7 @@
         </select>
 
         <label>Additional Notes</label>
-        <textarea id="notes" rows="4" placeholder="Describe your preferred design or placement"></textarea>
+		<textarea id="notes" name="notes" rows="4"  placeholder="Describe your preference or placement or how many people or how many hours"></textarea>
 
         <button type="submit">Submit Order</button>
 

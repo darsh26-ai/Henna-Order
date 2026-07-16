@@ -221,7 +221,11 @@
         confirmBtn.style.cursor = "pointer";
 
         confirmBtn.addEventListener("click", function() {
-            instance.close();
+
+            // ⭐ THIS LINE SAVES THE SELECTED DATE/TIME INTO THE INPUT
+            instance.setDate(instance.selectedDates[0], true);
+
+            instance.close(); // close calendar
         });
 
         instance.calendarContainer.appendChild(confirmBtn);
@@ -230,28 +234,26 @@
 
     // WhatsApp Auto Message
     function sendWhatsApp() {
-		const name = document.getElementById("name").value;
-		const phone = document.getElementById("phone").value;
-		const datetime = document.getElementById("datetime").value;
-		const style = document.getElementById("style").value;
-		const notes = document.getElementById("notes").value;
+    const name = encodeURIComponent(document.getElementById("name").value);
+    const phone = encodeURIComponent(document.getElementById("phone").value);
+    const datetime = encodeURIComponent(document.getElementById("datetime").value);
+    const style = encodeURIComponent(document.getElementById("style").value);
+    const notes = encodeURIComponent(document.getElementById("notes").value);
 
-		const message =
-			`Hello, I would like to book a henna appointment.%0A` +
-			`Name: ${name}%0A` +
-			`Phone: ${phone}%0A` +
-			`Preferred Date & Time: ${datetime}%0A` +
-			`Style: ${style}%0A` +
-			`Notes: ${notes}`;
+    const message =
+        `Hello, I would like to book a henna appointment.%0A` +
+        `Name: ${name}%0A` +
+        `Phone: ${phone}%0A` +
+        `Preferred Date & Time: ${datetime}%0A` +
+        `Style: ${style}%0A` +
+        `Notes: ${notes}`;
 
-		const whatsappNumber = "7279676639";
+    const whatsappNumber = "7279676639";
 
-		window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+    window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-		// Reset form after sending WhatsApp message
-		document.getElementById("hennaForm").reset();
+    document.getElementById("hennaForm").reset();
 }
-
 	document.getElementById("hennaForm").addEventListener("submit", function(e) {
     e.preventDefault(); // stop page reload
     this.reset();       // clear all fields

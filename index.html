@@ -17,7 +17,8 @@
 
     <style>
         body {
-            font-family: 'Playfair Display', serif;
+            
+			font-family: 'Playfair Display', serif;
 			font-style: italic;
             background: #faf4ef;
             margin: 0;
@@ -28,7 +29,7 @@
 
         header {
 			background:
-			linear-gradient(135deg, rgba(182, 93, 46, 0.90), rgba(227, 158, 75, 0.90)),
+			linear-gradient(135deg, rgba(181, 93, 46, 0.90), rgba(227, 158, 75, 0.90)),
 			url('pattern.png'); /* your henna pattern */
 			background-size: cover;
 			background-repeat: no-repeat;
@@ -54,13 +55,13 @@
         }
 
         .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+			background: linear-gradient(180deg, #FFF8E1, #F3D9A4);
+			max-width: 800px;
+			margin: 20px auto;
+			padding: 20px;
+			border-radius: 12px;
+			box-shadow: 0 0 12px rgba(0,0,0,0.15);
+		}
 
         h2 {
             border-left: none;
@@ -95,12 +96,13 @@
             width: 100%;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent; /* Fix iPhone tap highlight */
-        }
+        }      
 
         .whatsapp-btn {
             background: #25D366;
-        }
-
+        }		
+		
+		}
         .gallery {
             display: flex;
             gap: 10px;
@@ -143,10 +145,10 @@
 <div class="container">
     <h2>Design Gallery</h2>
     <div class="gallery">
-        <img src="https://github.com/darsh26-ai/Henna-Order/raw/main/Image/image_1.png" alt="Design 1">
-        <img src="https://github.com/darsh26-ai/Henna-Order/raw/main/Image/image_2.png" alt="Design 2">
-        <img src="https://github.com/darsh26-ai/Henna-Order/raw/main/Image/image_1.png" alt="Design 3">
-        <img src="https://github.com/darsh26-ai/Henna-Order/raw/main/Image/image_2.png" alt="Design 4">
+        <img src="https://via.placeholder.com/120?text=Design+1" alt="Design 1">
+        <img src="https://via.placeholder.com/120?text=Design+2" alt="Design 2">
+        <img src="https://via.placeholder.com/120?text=Design+3" alt="Design 3">
+        <img src="https://via.placeholder.com/120?text=Design+4" alt="Design 4">
     </div>
 
     <h2>Order Form</h2>
@@ -174,7 +176,6 @@
 
 		  <button id="confirmBtn">Confirm</button>
 		</div> -->
-
         <label>Henna Style</label>
         <select id="style" name="style" required>
             <option value="">Select style</option>
@@ -193,21 +194,16 @@
 
         <button type="submit">Submit Order</button>
 
-        <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">Send via WhatsApp</button>
+        <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
+		  <i class="fa fa-whatsapp" style="font-size:20px;margin-right:8px;"></i>
+		  Send via WhatsApp
+		</button>
+
     </form>
 </div>
 
 <script>
     // Date + Time Picker (Safari Friendly)
-	#datetime {
-	    position: relative;
-	    z-index: 9999;
-	}
-	
-	.flatpickr-calendar {
-	    z-index: 99999 !important;
-	}
-	
     flatpickr("#datetime", {
     enableTime: true,
     dateFormat: "Y-m-d h:i K",
@@ -230,11 +226,7 @@
         confirmBtn.style.cursor = "pointer";
 
         confirmBtn.addEventListener("click", function() {
-
-            // ⭐ THIS LINE SAVES THE SELECTED DATE/TIME INTO THE INPUT
-            instance.setDate(instance.selectedDates[0], true);
-
-            instance.close(); // close calendar
+            instance.close();
         });
 
         instance.calendarContainer.appendChild(confirmBtn);
@@ -242,29 +234,31 @@
 });
 
 
+
     // WhatsApp Auto Message
     function sendWhatsApp() {
-    const name = encodeURIComponent(document.getElementById("name").value);
-    const phone = encodeURIComponent(document.getElementById("phone").value);
-    const datetime = encodeURIComponent(document.getElementById("datetime").value);
-    const style = encodeURIComponent(document.getElementById("style").value);
-    const notes = encodeURIComponent(document.getElementById("notes").value);
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const datetime = document.getElementById("datetime").value;
+    const style = document.getElementById("style").value;
+    const notes = document.getElementById("notes").value;
 
-    const message =
-        `Hello, I would like to book a henna appointment.%0A` +
-        `Name: ${name}%0A` +
-        `Phone: ${phone}%0A` +
-        `Preferred Date & Time: ${datetime}%0A` +
-        `Style: ${style}%0A` +
-        `Notes: ${notes}`;
+    const message = encodeURIComponent(
+        `Hello, I would like to book a henna appointment.
+		Name: ${name}
+		Phone: ${phone}
+		Preferred Date & Time: ${datetime}
+		Style: ${style}
+		Notes: ${notes}`
+    );
 
     const whatsappNumber = "7279676639";
 
-   window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+    window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-setTimeout(() => {
     document.getElementById("hennaForm").reset();
-}, 1500);
+}
+
 
 	document.getElementById("hennaForm").addEventListener("submit", function(e) {
     e.preventDefault(); // stop page reload

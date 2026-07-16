@@ -163,7 +163,21 @@
         <input id="phone" name="phone" type="tel" placeholder="Your phone number" required>
 
         <label>Preferred Date & Time</label>
-        <input id="datetime" name="datetime" type="text" placeholder="Select date & time" required>
+		<input id="datetime" name="datetime" type="text" placeholder="Select date & time" required>
+
+		<!-- Popup container -->
+		<div id="pickerPopup" style="
+		  display:none; position:absolute; background:#fff; padding:15px;
+		  border:1px solid #ccc; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2);
+		">
+		  <label>Select Date:</label><br>
+		  <input type="date" id="datePicker"><br><br>
+
+		  <label>Select Time:</label><br>
+		  <input type="time" id="timePicker"><br><br>
+
+		  <button id="confirmBtn">Confirm</button>
+		</div>
 
         <label>Henna Style</label>
         <select id="style" name="style" required>
@@ -190,12 +204,27 @@
 <script>
     // Date + Time Picker (Safari Friendly)
     flatpickr("#datetime", {
-        enableTime: true,
-        dateFormat: "Y-m-d h:i K",
-        minDate: "today",
-        time_24hr: false,
-        disableMobile: true  // Forces flatpickr on iPhone instead of native picker
-    });
+    enableTime: true,
+    dateFormat: "Y-m-d h:i K",
+    minDate: "today",
+    time_24hr: false,
+    disableMobile: true,
+
+    onReady: function(selectedDates, dateStr, instance) {
+        // Create confirm button
+        const confirmBtn = document.createElement("button");
+        confirmBtn.textContent = "Confirm";
+        confirmBtn.style.marginTop = "10px";
+        confirmBtn.style.width = "100%";
+
+        confirmBtn.addEventListener("click", function() {
+            instance.close(); // close the calendar
+        });
+
+        // Append button inside flatpickr calendar
+        instance.calendarContainer.appendChild(confirmBtn);
+    }
+});
 
     // WhatsApp Auto Message
     function sendWhatsApp() {

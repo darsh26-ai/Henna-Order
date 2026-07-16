@@ -161,7 +161,7 @@
         <label>Preferred Date & Time</label>
 		<input id="datetime" name="datetime" type="text" placeholder="Select date & time" required>
 
-		<!-- Popup container -->
+		<!-- Popup container 
 		<div id="pickerPopup" style="
 		  display:none; position:absolute; background:#fff; padding:15px;
 		  border:1px solid #ccc; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2);
@@ -173,7 +173,7 @@
 		  <input type="time" id="timePicker"><br><br>
 
 		  <button id="confirmBtn">Confirm</button>
-		</div>
+		</div> -->
 
         <label>Henna Style</label>
         <select id="style" name="style" required>
@@ -207,17 +207,23 @@
     disableMobile: true,
 
     onReady: function(selectedDates, dateStr, instance) {
-        // Create confirm button
         const confirmBtn = document.createElement("button");
         confirmBtn.textContent = "Confirm";
+
+        // Green button
+        confirmBtn.style.backgroundColor = "green";
+        confirmBtn.style.color = "white";
         confirmBtn.style.marginTop = "10px";
         confirmBtn.style.width = "100%";
+        confirmBtn.style.padding = "10px";
+        confirmBtn.style.border = "none";
+        confirmBtn.style.borderRadius = "6px";
+        confirmBtn.style.cursor = "pointer";
 
         confirmBtn.addEventListener("click", function() {
-            instance.close(); // close the calendar
+            instance.close();
         });
 
-        // Append button inside flatpickr calendar
         instance.calendarContainer.appendChild(confirmBtn);
     }
 });

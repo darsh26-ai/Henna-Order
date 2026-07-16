@@ -251,10 +251,12 @@
 
     const whatsappNumber = "7279676639";
 
-    window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+   window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
 
+setTimeout(() => {
     document.getElementById("hennaForm").reset();
-}
+}, 1500);
+
 	document.getElementById("hennaForm").addEventListener("submit", function(e) {
     e.preventDefault(); // stop page reload
     this.reset();       // clear all fields

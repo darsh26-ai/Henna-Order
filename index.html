@@ -199,6 +199,15 @@
 
 <script>
     // Date + Time Picker (Safari Friendly)
+	#datetime {
+	    position: relative;
+	    z-index: 9999;
+	}
+	
+	.flatpickr-calendar {
+	    z-index: 99999 !important;
+	}
+	
     flatpickr("#datetime", {
     enableTime: true,
     dateFormat: "Y-m-d h:i K",

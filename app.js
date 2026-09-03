@@ -31,7 +31,7 @@ const API_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
    14105551234
 */
 
-const WHATSAPP_NUMBER = "YOUR_WHATSAPP_NUMBER_HERE";
+const WHATSAPP_NUMBER = "17279676639";
 
 
 /* =========================================

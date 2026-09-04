@@ -811,3 +811,36 @@ function createJsonResponse(data) {
             ContentService.MimeType.JSON
         );
 }
+
+/* =========================================
+   GOOGLE SCRIPT RUN WRAPPERS
+========================================= */
+
+function checkBookingAvailability(data) {
+    validateAction({
+        ...data,
+        action: "checkAvailability"
+    });
+
+    const result = checkAvailability(data);
+
+    return {
+        success: true,
+        available: result.available,
+        message: result.message
+    };
+}
+
+
+function createHennaBooking(data) {
+    validateAction({
+        ...data,
+        action: "createBooking"
+    });
+
+    const result = handleCreateBooking(data);
+
+    return JSON.parse(
+        result.getContent()
+    );
+}

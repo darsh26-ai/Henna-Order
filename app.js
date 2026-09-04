@@ -1,5 +1,6 @@
 /* =========================================
    HENNA BOOKING APPLICATION
+   GOOGLE APPS SCRIPT VERSION
 ========================================= */
 
 "use strict";
@@ -10,25 +11,10 @@
 ========================================= */
 
 /*
-   Replace this after deploying Google Apps Script.
-
-   Example:
-
-   const API_URL =
-   "https://script.google.com/macros/s/AKfycbxxxxxxxx/exec";
-*/
-
-const API_URL = "https://script.google.com/macros/s/AKfycbzRYi9Pv6vF7kbemrbzl5ZAwzv3bJL1n0i900fh5GK3Pit_mEJ8hxQXcHm2TYy9o8trtw/exec";
-
-
-/*
    WhatsApp number that receives the booking.
 
    Country code + number.
    Do not use +, spaces or brackets.
-
-   Example USA:
-   14105551234
 */
 
 const WHATSAPP_NUMBER = "17279676639";
@@ -114,13 +100,16 @@ function setMinimumDate() {
 
     const today = new Date();
 
-    const year = today.getFullYear();
+    const year =
+        today.getFullYear();
 
     const month =
-        String(today.getMonth() + 1).padStart(2, "0");
+        String(today.getMonth() + 1)
+            .padStart(2, "0");
 
     const day =
-        String(today.getDate()).padStart(2, "0");
+        String(today.getDate())
+            .padStart(2, "0");
 
     bookingDate.min =
         `${year}-${month}-${day}`;
@@ -136,10 +125,6 @@ function formatDate(dateValue) {
     if (!dateValue) {
         return "";
     }
-
-    /*
-       Adding T00:00:00 prevents date timezone shifting.
-    */
 
     const date =
         new Date(`${dateValue}T00:00:00`);
@@ -169,7 +154,8 @@ function formatTime(timeValue) {
     const [hours, minutes] =
         timeValue.split(":");
 
-    const time = new Date();
+    const time =
+        new Date();
 
     time.setHours(
         Number(hours),
@@ -213,13 +199,10 @@ function calculateEndTime() {
         60 *
         1000;
 
-    const end =
-        new Date(
-            start.getTime() +
-            durationMilliseconds
-        );
-
-    return end;
+    return new Date(
+        start.getTime() +
+        durationMilliseconds
+    );
 }
 
 
@@ -271,6 +254,7 @@ function updateSummary() {
         !selectedStartTime ||
         !selectedDuration
     ) {
+
         summaryContent.innerHTML =
             "Select an artist, date, time and duration.";
 
@@ -294,15 +278,17 @@ function updateSummary() {
         <br>
 
         <strong>Date:</strong>
-        ${formattedDate}
+        ${escapeHtml(formattedDate)}
         <br>
 
         <strong>Time:</strong>
-        ${formattedStart} – ${formattedEnd}
+        ${escapeHtml(formattedStart)}
+        –
+        ${escapeHtml(formattedEnd)}
         <br>
 
         <strong>Duration:</strong>
-        ${selectedDuration} hour(s)
+        ${escapeHtml(selectedDuration)} hour(s)
     `;
 }
 
@@ -358,6 +344,7 @@ function hideStatus() {
 function validateAppointmentFields() {
 
     if (!artist.value) {
+
         showStatus(
             "Please select a Henna artist.",
             "error"
@@ -368,6 +355,7 @@ function validateAppointmentFields() {
 
 
     if (!bookingDate.value) {
+
         showStatus(
             "Please select an event date.",
             "error"
@@ -378,6 +366,7 @@ function validateAppointmentFields() {
 
 
     if (!startTime.value) {
+
         showStatus(
             "Please select a start time.",
             "error"
@@ -388,6 +377,7 @@ function validateAppointmentFields() {
 
 
     if (!duration.value) {
+
         showStatus(
             "Please select an appointment duration.",
             "error"
@@ -433,8 +423,6 @@ function getBookingData() {
 
     return {
 
-        action: "checkAvailability",
-
         customerName:
             customerName.value.trim(),
 
@@ -477,59 +465,16 @@ function getBookingData() {
 
 
 /* =========================================
-   CALL GOOGLE APPS SCRIPT
-========================================= */
-
-async function callBackend(data) {
-
-    if (
-        !API_URL ||
-        API_URL.includes("PASTE_YOUR")
-    ) {
-        throw new Error(
-            "Please add your Google Apps Script Web App URL in app.js."
-        );
-    }
-
-
-    const response =
-        await fetch(
-            API_URL,
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                        "text/plain;charset=utf-8"
-                },
-
-                body:
-                    JSON.stringify(data)
-            }
-        );
-
-
-    if (!response.ok) {
-
-        throw new Error(
-            "Unable to connect to the booking server."
-        );
-    }
-
-
-    return await response.json();
-}
-
-
-/* =========================================
    CHECK AVAILABILITY
+   GOOGLE.SCRIPT.RUN
 ========================================= */
 
-async function checkAvailability() {
+function checkAvailability() {
 
     bookingAvailable = false;
 
-    confirmBookingBtn.disabled = true;
+    confirmBookingBtn.disabled =
+        true;
 
 
     if (!validateAppointmentFields()) {
@@ -539,7 +484,8 @@ async function checkAvailability() {
 
     hideStatus();
 
-    checkAvailabilityBtn.disabled = true;
+    checkAvailabilityBtn.disabled =
+        true;
 
     checkAvailabilityBtn.textContent =
         "Checking...";
@@ -551,74 +497,109 @@ async function checkAvailability() {
     );
 
 
-    try {
-
-        const bookingData =
-            getBookingData();
-
-        bookingData.action =
-            "checkAvailability";
+    const bookingData =
+        getBookingData();
 
 
-        const result =
-            await callBackend(bookingData);
+    google.script.run
 
+        .withSuccessHandler(function(result) {
 
-        if (result.available) {
-
-            bookingAvailable = true;
-
-            confirmBookingBtn.disabled =
-                false;
-
-
-            showStatus(
-                "✓ Great! This artist is available at the selected time.",
-                "success"
+            console.log(
+                "Availability result:",
+                result
             );
 
-        } else {
 
-            bookingAvailable = false;
+            if (result && result.available) {
+
+                bookingAvailable =
+                    true;
+
+                confirmBookingBtn.disabled =
+                    false;
+
+
+                showStatus(
+                    "✓ Great! " +
+                    bookingData.artist +
+                    " is available at the selected time.",
+                    "success"
+                );
+
+            } else {
+
+                bookingAvailable =
+                    false;
+
+                confirmBookingBtn.disabled =
+                    true;
+
+
+                showStatus(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "Sorry, this time is already booked. Please select another time.",
+                    "error"
+                );
+            }
+
+        })
+
+        .withFailureHandler(function(error) {
+
+            console.error(
+                "Availability error:",
+                error
+            );
+
+
+            bookingAvailable =
+                false;
 
             confirmBookingBtn.disabled =
                 true;
 
 
             showStatus(
-                result.message ||
-                "Sorry, this time is already booked. Please select another time.",
+                error &&
+                error.message
+                    ? error.message
+                    : "Unable to check calendar availability.",
                 "error"
             );
-        }
 
-    } catch (error) {
+        })
 
-        console.error(error);
-
-
-        showStatus(
-            error.message ||
-            "Something went wrong while checking availability.",
-            "error"
+        .checkBookingAvailability(
+            bookingData
         );
 
-    } finally {
+
+    /*
+       Reset button immediately.
+       Google Apps Script runs asynchronously.
+    */
+
+    setTimeout(function() {
 
         checkAvailabilityBtn.disabled =
             false;
 
         checkAvailabilityBtn.textContent =
             "🔍 Check Availability";
-    }
+
+    }, 500);
 }
 
 
 /* =========================================
    CONFIRM BOOKING
+   GOOGLE.SCRIPT.RUN
 ========================================= */
 
-async function confirmBooking(event) {
+function confirmBooking(event) {
 
     event.preventDefault();
 
@@ -655,84 +636,114 @@ async function confirmBooking(event) {
     );
 
 
-    try {
-
-        const bookingData =
-            getBookingData();
-
-        bookingData.action =
-            "createBooking";
+    const bookingData =
+        getBookingData();
 
 
-        /*
-           Important:
-           Backend checks availability AGAIN.
+    /*
+       Important:
+       The backend checks availability again
+       before creating the calendar event.
+    */
 
-           This prevents two people from both booking
-           the same time after checking availability.
-        */
+    google.script.run
 
-        const result =
-            await callBackend(bookingData);
+        .withSuccessHandler(function(result) {
 
-
-        if (!result.success) {
-
-            bookingAvailable = false;
-
-            throw new Error(
-                result.message ||
-                "Unable to create booking."
+            console.log(
+                "Booking result:",
+                result
             );
-        }
 
 
-        showBookingSuccess(
-            bookingData,
-            result
+            if (!result || !result.success) {
+
+                bookingAvailable =
+                    false;
+
+                showStatus(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "Unable to create booking.",
+                    "error"
+                );
+
+                confirmBookingBtn.disabled =
+                    false;
+
+                confirmBookingBtn.textContent =
+                    "🌸 Confirm Booking";
+
+                return;
+            }
+
+
+            /*
+               Booking successfully created.
+            */
+
+            showBookingSuccess(
+                bookingData,
+                result
+            );
+
+
+            hideStatus();
+
+
+            bookingForm.classList.add(
+                "hidden"
+            );
+
+            successCard.classList.remove(
+                "hidden"
+            );
+
+
+            successCard.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+
+            bookingAvailable =
+                false;
+
+        })
+
+        .withFailureHandler(function(error) {
+
+            console.error(
+                "Booking error:",
+                error
+            );
+
+
+            bookingAvailable =
+                false;
+
+
+            showStatus(
+                error &&
+                error.message
+                    ? error.message
+                    : "Unable to create booking. Please try again.",
+                "error"
+            );
+
+
+            confirmBookingBtn.disabled =
+                false;
+
+            confirmBookingBtn.textContent =
+                "🌸 Confirm Booking";
+
+        })
+
+        .createHennaBooking(
+            bookingData
         );
-
-
-        hideStatus();
-
-        bookingForm.classList.add(
-            "hidden"
-        );
-
-        successCard.classList.remove(
-            "hidden"
-        );
-
-
-        successCard.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-
-    } catch (error) {
-
-        console.error(error);
-
-
-        bookingAvailable = false;
-
-
-        showStatus(
-            error.message ||
-            "Unable to create booking. Please try again.",
-            "error"
-        );
-
-
-    } finally {
-
-        confirmBookingBtn.disabled =
-            false;
-
-        confirmBookingBtn.textContent =
-            "🌸 Confirm Booking";
-    }
 }
 
 
@@ -774,11 +785,13 @@ function showBookingSuccess(
         <br>
 
         <strong>📅 Date:</strong>
-        ${formattedDate}
+        ${escapeHtml(formattedDate)}
         <br>
 
         <strong>⏰ Time:</strong>
-        ${formattedStart} – ${formattedEnd}
+        ${escapeHtml(formattedStart)}
+        –
+        ${escapeHtml(formattedEnd)}
         <br>
 
         <strong>📍 Location:</strong>
@@ -848,28 +861,20 @@ ${data.notes || "No additional notes"}
 ✅ Calendar has been blocked for this appointment.`;
 
 
-    if (
-        !WHATSAPP_NUMBER ||
-        WHATSAPP_NUMBER.includes("YOUR_WHATSAPP")
-    ) {
+    if (!WHATSAPP_NUMBER) {
 
         whatsappButton.href =
             "#";
 
-        whatsappButton.addEventListener(
-            "click",
+        whatsappButton.onclick =
             function(event) {
 
                 event.preventDefault();
 
                 alert(
-                    "Please add your WhatsApp number in app.js."
+                    "WhatsApp number is not configured."
                 );
-            },
-            {
-                once: true
-            }
-        );
+            };
 
         return;
     }
@@ -886,7 +891,8 @@ ${data.notes || "No additional notes"}
 
 function resetAvailability() {
 
-    bookingAvailable = false;
+    bookingAvailable =
+        false;
 
     confirmBookingBtn.disabled =
         true;
@@ -914,6 +920,8 @@ function createNewBooking() {
     resetAvailability();
 
     updateSummary();
+
+    setMinimumDate();
 
     window.scrollTo({
         top: 0,

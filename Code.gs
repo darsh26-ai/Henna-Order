@@ -76,13 +76,50 @@ const CONFIG = {
 ========================================= */
 
 function doGet() {
-
-    return createJsonResponse({
-        success: true,
-        message: "Henna Booking API is running."
-    });
+  return HtmlService.createHtmlOutputFromFile('index')
+    .setTitle('Henna Art Booking');
 }
 
+function checkBookingAvailability(data) {
+
+    validateAction({
+        ...data,
+        action: "checkAvailability"
+    });
+
+    const result =
+        checkAvailability(data);
+
+    return {
+        success: true,
+        available: result.available,
+        message: result.message
+    };
+}
+
+
+function createHennaBooking(data) {
+
+    validateAction({
+        ...data,
+        action: "createBooking"
+    });
+
+    const result =
+        handleCreateBooking(data);
+
+    /*
+       handleCreateBooking() currently returns
+       a JSON TextOutput object.
+
+       Convert it back into a normal JavaScript
+       object for google.script.run.
+    */
+
+    return JSON.parse(
+        result.getContent()
+    );
+}
 
 /* =========================================
    POST REQUEST

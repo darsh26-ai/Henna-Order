@@ -6,7 +6,7 @@
 
 /* =========================================
    COLOR VARIABLES
-========================================= */
+
 
 :root {
     --primary: #7a1f4b;
@@ -47,6 +47,50 @@
         0 20px 55px rgba(80, 25, 50, 0.22);
 }
 
+========================================= */
+
+:root {
+    /* Main Branding: Rich Natural Browns & Earthy Sage Greens */
+    --primary: #4d5e4b;       /* Deep moss/sage green for main buttons/headers */
+    --primary-dark: #354234;  /* Darker moss green for button hover states */
+
+    --secondary: #768f72;     /* Medium sage green accent */
+    --sage-light: #a7bfa4;    /* Light sage green for soft highlights */
+    --sage-pale: #e2ede0;     /* Very pale mint/sage for subtle states */
+
+    --gold: #b38646;          /* Muted, antique earthy gold if you still want metallic accents */
+    --gold-light: #ebd6b7;    /* Soft warm cream-gold */
+
+    --accent: #c4ac93;        /* Soft earthy taupe/clay accent */
+
+    --light: #fbf7f0;         /* Clean, warm beige backdrop color */
+
+    /* Main booking card colors (Cleaned from pink to match new sage canvas) */
+    --card-sage-light: #a7bfa4;
+    --card-sage-mid: #8fa88b;
+    --card-sage-deep: #5d755a;
+
+    /* Input Fields (Kept crisp white with very soft, clean borders) */
+    --input-bg: #ffffff;        /* Pure white for maximum readability inside the input fields */
+    --input-border: #bbcfba;    /* Soft muted green border for input fields */
+
+    /* Typography (Pure deep espresso dark brown instead of purple-black) */
+    --text: #2c1e17;            /* Primary crisp dark brown text */
+    --muted: #615249;           /* Secondary/helper text color */
+
+    --border: #d4cbd3;          /* Neutral gray-brown divider border line */
+
+    /* Alert / Validation System States */
+    --success: #3a5f43;         /* Deep botanical green */
+    --success-bg: #edf5ee;      /* Soft pale green alert background */
+
+    --error: #a63a3a;           /* Deep crimson red */
+    --error-bg: #f9ebeb;        /* Soft pale red alert background */
+
+    /* Shadows (Updated from heavy purple/pink to a transparent earth-tone soft shadow) */
+    --shadow:
+        0 20px 55px rgba(44, 30, 23, 0.12);
+}
 
 /* =========================================
    GLOBAL RESET

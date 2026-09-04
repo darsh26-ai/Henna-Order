@@ -11,13 +11,7 @@
 ========================================= */
 
 /*
-   IMPORTANT:
-   Replace this with your deployed
-   Google Apps Script Web App URL.
-
-   Example:
-
-   https://script.google.com/macros/s/XXXXXXXXXXXX/exec
+   Google Apps Script Web App URL
 */
 
 const GOOGLE_APPS_SCRIPT_URL =
@@ -26,7 +20,6 @@ const GOOGLE_APPS_SCRIPT_URL =
 
 /*
    WhatsApp number.
-
    Country code + phone number.
    No +, spaces or brackets.
 */
@@ -341,7 +334,7 @@ function hideStatus() {
 
 
 /* =========================================
-   VALIDATE
+   VALIDATE APPOINTMENT FIELDS
 ========================================= */
 
 function validateAppointmentFields() {
@@ -412,6 +405,25 @@ function validateAppointmentFields() {
    GET BOOKING DATA
 ========================================= */
 
+/*
+   IMPORTANT:
+   These property names MUST match Code.gs.
+
+   Code.gs expects:
+
+   fullName
+   phone
+   email
+   artist
+   service
+   eventDate
+   startTime
+   duration
+   numberOfPeople
+   location
+   notes
+*/
+
 function getBookingData() {
 
     const end =
@@ -419,7 +431,12 @@ function getBookingData() {
 
     return {
 
-        customerName:
+        /*
+           BACKEND FIELD
+           ----------------
+           fullName
+        */
+        fullName:
             customerName.value.trim(),
 
         phone:
@@ -434,7 +451,12 @@ function getBookingData() {
         service:
             service.value,
 
-        bookingDate:
+        /*
+           BACKEND FIELD
+           ----------------
+           eventDate
+        */
+        eventDate:
             bookingDate.value,
 
         startTime:
@@ -452,6 +474,10 @@ function getBookingData() {
         notes:
             notes.value.trim(),
 
+        /*
+           Not required by Code.gs,
+           but useful if needed by frontend.
+        */
         endTime:
             end
                 ? end.toISOString()
@@ -637,6 +663,18 @@ function callBackend(
                 params.toString();
 
 
+            console.log(
+                "Calling backend:",
+                action,
+                data
+            );
+
+            console.log(
+                "Backend URL:",
+                script.src
+            );
+
+
             document.body.appendChild(
                 script
             );
@@ -694,6 +732,12 @@ async function checkAvailability() {
             getBookingData();
 
 
+        console.log(
+            "Sending availability data:",
+            data
+        );
+
+
         const result =
             await callBackend(
                 "checkAvailability",
@@ -707,10 +751,14 @@ async function checkAvailability() {
         );
 
 
+        /*
+           AVAILABLE
+        */
+
         if (
             result &&
-            result.success &&
-            result.available
+            result.success === true &&
+            result.available === true
         ) {
 
             bookingAvailable =
@@ -725,7 +773,13 @@ async function checkAvailability() {
                 "success"
             );
 
-        } else {
+        }
+
+        /*
+           NOT AVAILABLE
+        */
+
+        else {
 
             bookingAvailable =
                 false;
@@ -837,11 +891,11 @@ async function confirmBooking(event) {
             getBookingData();
 
 
-        /*
-           The server performs
-           another availability check
-           while holding a lock.
-        */
+        console.log(
+            "Sending booking data:",
+            bookingData
+        );
+
 
         const result =
             await callBackend(
@@ -856,9 +910,25 @@ async function confirmBooking(event) {
         );
 
 
+        /*
+           IMPORTANT:
+
+           createBooking can return:
+
+           success: true
+           available: false
+           booked: false
+
+           when another booking has taken
+           the slot.
+
+           Therefore we MUST check booked === true.
+        */
+
         if (
             !result ||
-            !result.success
+            result.success !== true ||
+            result.booked !== true
         ) {
 
             bookingAvailable =
@@ -955,7 +1025,7 @@ function showBookingSuccess(
 
     const formattedDate =
         formatDate(
-            data.bookingDate
+            data.eventDate
         );
 
     const formattedStart =
@@ -989,7 +1059,7 @@ function showBookingSuccess(
 
         <strong>👤 Customer:</strong>
         ${escapeHtml(
-            data.customerName
+            data.fullName
         )}
         <br>
 
@@ -1059,7 +1129,7 @@ function createWhatsAppLink(
 
     const formattedDate =
         formatDate(
-            data.bookingDate
+            data.eventDate
         );
 
     const formattedStart =
@@ -1088,7 +1158,7 @@ function createWhatsAppLink(
 
 🆔 Booking ID: ${bookingId || "N/A"}
 
-👤 Customer: ${data.customerName}
+👤 Customer: ${data.fullName}
 📞 Phone: ${data.phone}
 📧 Email: ${data.email || "N/A"}
 
@@ -1125,7 +1195,7 @@ ${data.notes || "No additional notes"}
 
 
 /* =========================================
-   RESET
+   RESET AVAILABILITY
 ========================================= */
 
 function resetAvailability() {
@@ -1221,4 +1291,3 @@ newBookingBtn.addEventListener(
 setMinimumDate();
 
 updateSummary();
-

@@ -18,7 +18,7 @@
    "https://script.google.com/macros/s/AKfycbxxxxxxxx/exec";
 */
 
-const API_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+const API_URL = "https://script.google.com/macros/s/AKfycbwyt1cRcwAX6ti3ShzS3LXtjKo_yhxVLwMxDnt756gd65SiWZ_YitU9qfpgStLtXlGY/exec";
 
 
 /*

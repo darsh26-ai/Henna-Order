@@ -1,6 +1,7 @@
 /* =========================================
-   HENNA BOOKING BACKEND
+   HENNA ART BOOKING BACKEND
    GOOGLE APPS SCRIPT
+   GITHUB PAGES COMPATIBLE
 ========================================= */
 
 
@@ -8,44 +9,13 @@
    CONFIGURATION
 ========================================= */
 
-/*
-   Replace these values with your actual IDs.
-*/
-
-
 const CONFIG = {
-
-    /*
-       Create or use a Google Sheet
-       for storing bookings.
-
-       Sheet ID is the part between:
-
-       https://docs.google.com/spreadsheets/d/
-
-       and
-
-       /edit
-    */
 
     SPREADSHEET_ID:
         "1OX2ij1cbagSECWV4gKfJgQLKmUMbZ1i8O7F6VTQyeow",
 
-
     SHEET_NAME:
         "Bookings",
-
-
-    /*
-       Google Calendar IDs.
-
-       Recommended:
-
-       Create one calendar for Nirali
-       and another calendar for Kaushika.
-
-       Then copy each calendar ID.
-    */
 
     CALENDARS: {
 
@@ -56,16 +26,6 @@ const CONFIG = {
             "b319db05703e81cdb63fc2dde5ad522e4355537fe2be0a9091ad1fed345e8807@group.calendar.google.com"
     },
 
-
-    /*
-       Time zone for bookings.
-
-       Since you are in Maryland,
-       America/New_York is appropriate.
-
-       Change if needed.
-    */
-
     TIMEZONE:
         "America/New_York"
 };
@@ -75,102 +35,86 @@ const CONFIG = {
    GET REQUEST
 ========================================= */
 
-function doGet() {
-    return HtmlService
-        .createTemplateFromFile("index")
-        .evaluate()
-        .setTitle("Henna Art Booking");
-}
-
-
-/* =========================================
-   INCLUDE HTML FILES
-========================================= */
-
-function include(filename) {
-    return HtmlService
-        .createHtmlOutputFromFile(filename)
-        .getContent();
-}
-
-/* =========================================
-   GOOGLE SCRIPT RUN WRAPPERS
-========================================= */
-
-function checkBookingAvailability(data) {
-
-    validateAction({
-        ...data,
-        action: "checkAvailability"
-    });
-
-    const result =
-        checkAvailability(data);
-
-    return {
-        success: true,
-        available: result.available,
-        message: result.message
-    };
-}
-
-
-function createHennaBooking(data) {
-
-    validateAction({
-        ...data,
-        action: "createBooking"
-    });
-
-    const result =
-        handleCreateBooking(data);
-
-    return JSON.parse(
-        result.getContent()
-    );
-}
-
-/* =========================================
-   POST REQUEST
-========================================= */
-
-function doPost(e) {
+function doGet(e) {
 
     try {
 
+        e = e || {};
+
+        const params =
+            e.parameter || {};
+
+        const action =
+            params.action || "";
+
+        const callback =
+            params.callback || "";
+
+
+        /*
+           No action = health check.
+        */
+
+        if (!action) {
+
+            return createResponse(
+                {
+                    success: true,
+                    message:
+                        "Henna Booking API is running."
+                },
+                callback
+            );
+        }
+
+
         const data =
-            JSON.parse(e.postData.contents);
+            buildBookingData(params);
 
 
-        validateAction(data);
+        let result;
 
 
         if (
-            data.action ===
+            action ===
             "checkAvailability"
         ) {
 
-            return handleCheckAvailability(
-                data
-            );
-        }
+            validateAction(data);
 
+            result =
+                handleCheckAvailability(
+                    data
+                );
 
-        if (
-            data.action ===
+        } else if (
+            action ===
             "createBooking"
         ) {
 
-            return handleCreateBooking(
-                data
-            );
+            validateAction(data);
+
+            result =
+                handleCreateBooking(
+                    data
+                );
+
+        } else {
+
+            result = {
+
+                success: false,
+
+                message:
+                    "Invalid action."
+            };
         }
 
 
-        return createJsonResponse({
-            success: false,
-            message: "Invalid action."
-        });
+        return createResponse(
+            result,
+            callback
+        );
 
 
     } catch (error) {
@@ -178,12 +122,70 @@ function doPost(e) {
         console.error(error);
 
 
-        return createJsonResponse({
-            success: false,
-            message: error.message ||
-                "Server error occurred."
-        });
+        return createResponse(
+
+            {
+                success: false,
+
+                message:
+                    error &&
+                    error.message
+                        ? error.message
+                        : "Server error occurred."
+            },
+
+            e &&
+            e.parameter
+                ? e.parameter.callback
+                : ""
+        );
     }
+}
+
+
+/* =========================================
+   BUILD BOOKING DATA
+========================================= */
+
+function buildBookingData(params) {
+
+    return {
+
+        customerName:
+            params.customerName || "",
+
+        phone:
+            params.phone || "",
+
+        email:
+            params.email || "",
+
+        artist:
+            params.artist || "",
+
+        service:
+            params.service || "",
+
+        bookingDate:
+            params.bookingDate || "",
+
+        startTime:
+            params.startTime || "",
+
+        duration:
+            Number(params.duration || 0),
+
+        numberOfPeople:
+            Number(
+                params.numberOfPeople || 0
+            ),
+
+        location:
+            params.location || "",
+
+        notes:
+            params.notes || ""
+    };
 }
 
 
@@ -201,14 +203,6 @@ function validateAction(data) {
     }
 
 
-    if (!data.action) {
-
-        throw new Error(
-            "Action is required."
-        );
-    }
-
-
     if (!data.artist) {
 
         throw new Error(
@@ -217,7 +211,11 @@ function validateAction(data) {
     }
 
 
-    if (!CONFIG.CALENDARS[data.artist]) {
+    if (
+        !CONFIG.CALENDARS[
+            data.artist
+        ]
+    ) {
 
         throw new Error(
             "Invalid Henna artist."
@@ -241,8 +239,10 @@ function validateAction(data) {
     }
 
 
-    if (!data.duration ||
-        Number(data.duration) <= 0) {
+    if (
+        !data.duration ||
+        Number(data.duration) <= 0
+    ) {
 
         throw new Error(
             "Valid duration is required."
@@ -252,38 +252,134 @@ function validateAction(data) {
 
 
 /* =========================================
-   CHECK AVAILABILITY REQUEST
+   AVAILABILITY
 ========================================= */
 
 function handleCheckAvailability(data) {
 
-    const availability =
+    const result =
         checkAvailability(data);
 
 
-    return createJsonResponse({
+    return {
+
         success: true,
+
         available:
-            availability.available,
+            result.available,
+
         message:
-            availability.message
-    });
+            result.message
+    };
 }
 
 
 /* =========================================
-   CREATE BOOKING REQUEST
+   CHECK CALENDAR
+========================================= */
+
+function checkAvailability(data) {
+
+    const calendarId =
+        CONFIG.CALENDARS[
+            data.artist
+        ];
+
+
+    const calendar =
+        CalendarApp.getCalendarById(
+            calendarId
+        );
+
+
+    if (!calendar) {
+
+        throw new Error(
+            "Calendar not found for " +
+            data.artist
+        );
+    }
+
+
+    const start =
+        createStartDateTime(
+            data
+        );
+
+
+    const end =
+        createEndDateTime(
+            data,
+            start
+        );
+
+
+    if (
+        start.getTime() <=
+        new Date().getTime()
+    ) {
+
+        return {
+
+            available: false,
+
+            message:
+                "Please select a future date and time."
+        };
+    }
+
+
+    /*
+       CalendarApp.getEvents()
+       returns events overlapping
+       this time range.
+    */
+
+    const events =
+        calendar.getEvents(
+            start,
+            end
+        );
+
+
+    if (
+        events &&
+        events.length > 0
+    ) {
+
+        return {
+
+            available: false,
+
+            message:
+                "Sorry, " +
+                data.artist +
+                " is already booked during this time. Please select another time."
+        };
+    }
+
+
+    return {
+
+        available: true,
+
+        message:
+            data.artist +
+            " is available at this time."
+    };
+}
+
+
+/* =========================================
+   CREATE BOOKING
 ========================================= */
 
 function handleCreateBooking(data) {
 
-    validateBookingData(data);
+    validateBookingData(
+        data
+    );
 
-
-    /*
-       Lock prevents simultaneous requests
-       from creating overlapping bookings.
-    */
 
     const lock =
         LockService.getScriptLock();
@@ -292,32 +388,39 @@ function handleCreateBooking(data) {
     try {
 
         /*
-           Wait up to 30 seconds
-           for another booking process.
+           Prevent two customers from
+           booking the same time simultaneously.
         */
 
-        lock.waitLock(30000);
+        lock.waitLock(
+            30000
+        );
 
 
         /*
-           Check AGAIN after obtaining lock.
-
-           This is very important for preventing
-           double bookings.
+           ALWAYS check again after
+           obtaining the lock.
         */
 
         const availability =
-            checkAvailability(data);
+            checkAvailability(
+                data
+            );
 
 
-        if (!availability.available) {
+        if (
+            !availability.available
+        ) {
 
-            return createJsonResponse({
+            return {
+
                 success: false,
+
                 available: false,
+
                 message:
                     availability.message
-            });
+            };
         }
 
 
@@ -326,11 +429,13 @@ function handleCreateBooking(data) {
         */
 
         const event =
-            createCalendarEvent(data);
+            createCalendarEvent(
+                data
+            );
 
 
         /*
-           Generate booking ID.
+           Generate unique booking ID.
         */
 
         const bookingId =
@@ -338,7 +443,7 @@ function handleCreateBooking(data) {
 
 
         /*
-           Save booking into Google Sheet.
+           Save to Google Sheet.
         */
 
         saveBookingToSheet(
@@ -348,7 +453,7 @@ function handleCreateBooking(data) {
         );
 
 
-        return createJsonResponse({
+        return {
 
             success: true,
 
@@ -362,14 +467,10 @@ function handleCreateBooking(data) {
 
             message:
                 "Booking successfully created."
-        });
+        };
 
 
     } finally {
-
-        /*
-           Always release lock.
-        */
 
         try {
 
@@ -387,101 +488,15 @@ function handleCreateBooking(data) {
 
 
 /* =========================================
-   CHECK CALENDAR AVAILABILITY
-========================================= */
-
-function checkAvailability(data) {
-
-    const calendarId =
-        CONFIG.CALENDARS[data.artist];
-
-
-    const calendar =
-        CalendarApp.getCalendarById(
-            calendarId
-        );
-
-
-    if (!calendar) {
-
-        throw new Error(
-            "Calendar not found for " +
-            data.artist
-        );
-    }
-
-
-    const start =
-        createStartDateTime(data);
-
-
-    const end =
-        createEndDateTime(
-            data,
-            start
-        );
-
-
-    if (start.getTime() < new Date().getTime()) {
-
-        return {
-            available: false,
-            message:
-                "Please select a future date and time."
-        };
-    }
-
-
-    /*
-       Gets all events overlapping
-       the selected time range.
-    */
-
-    const events =
-        calendar.getEvents(
-            start,
-            end
-        );
-
-
-    if (events.length > 0) {
-
-        const conflictingEvent =
-            events[0];
-
-
-        return {
-
-            available: false,
-
-            message:
-                "Sorry, " +
-                data.artist +
-                " is already booked during this time. " +
-                "Please select another time."
-        };
-    }
-
-
-    return {
-
-        available: true,
-
-        message:
-            data.artist +
-            " is available at this time."
-    };
-}
-
-
-/* =========================================
    CREATE CALENDAR EVENT
 ========================================= */
 
 function createCalendarEvent(data) {
 
     const calendarId =
-        CONFIG.CALENDARS[data.artist];
+        CONFIG.CALENDARS[
+            data.artist
+        ];
 
 
     const calendar =
@@ -500,7 +515,9 @@ function createCalendarEvent(data) {
 
 
     const start =
-        createStartDateTime(data);
+        createStartDateTime(
+            data
+        );
 
 
     const end =
@@ -534,15 +551,19 @@ ${data.location}
 Notes:
 ${data.notes || "No additional notes"}
 
-
-Created through Henna Booking Website.`;
+Created through Henna Art Booking Website.`;
 
 
     return calendar.createEvent(
+
         title,
+
         start,
+
         end,
+
         {
+
             description:
                 description,
 
@@ -554,48 +575,75 @@ Created through Henna Booking Website.`;
 
 
 /* =========================================
-   CREATE START DATE TIME
+   CREATE START DATE/TIME
 ========================================= */
 
 function createStartDateTime(data) {
 
-    const parts =
-        data.bookingDate.split("-");
+    const dateParts =
+        String(
+            data.bookingDate
+        ).split("-");
 
 
     const timeParts =
-        data.startTime.split(":");
+        String(
+            data.startTime
+        ).split(":");
+
+
+    if (
+        dateParts.length !== 3 ||
+        timeParts.length < 2
+    ) {
+
+        throw new Error(
+            "Invalid booking date or time."
+        );
+    }
 
 
     const year =
-        Number(parts[0]);
+        Number(
+            dateParts[0]
+        );
 
     const month =
-        Number(parts[1]) - 1;
+        Number(
+            dateParts[1]
+        ) - 1;
 
     const day =
-        Number(parts[2]);
+        Number(
+            dateParts[2]
+        );
 
     const hour =
-        Number(timeParts[0]);
+        Number(
+            timeParts[0]
+        );
 
     const minute =
-        Number(timeParts[1]);
+        Number(
+            timeParts[1]
+        );
 
 
     return new Date(
+
         year,
         month,
         day,
         hour,
         minute,
+        0,
         0
     );
 }
 
 
 /* =========================================
-   CREATE END DATE TIME
+   CREATE END DATE/TIME
 ========================================= */
 
 function createEndDateTime(
@@ -603,12 +651,8 @@ function createEndDateTime(
     start
 ) {
 
-    const durationHours =
-        Number(data.duration);
-
-
     const milliseconds =
-        durationHours *
+        Number(data.duration) *
         60 *
         60 *
         1000;
@@ -622,7 +666,7 @@ function createEndDateTime(
 
 
 /* =========================================
-   VALIDATE FULL BOOKING
+   VALIDATE BOOKING
 ========================================= */
 
 function validateBookingData(data) {
@@ -652,10 +696,14 @@ function validateBookingData(data) {
     requiredFields.forEach(
         function(field) {
 
+            const value =
+                data[field];
+
+
             if (
-                data[field] === undefined ||
-                data[field] === null ||
-                String(data[field]).trim() === ""
+                value === undefined ||
+                value === null ||
+                String(value).trim() === ""
             ) {
 
                 throw new Error(
@@ -665,11 +713,23 @@ function validateBookingData(data) {
             }
         }
     );
+
+
+    if (
+        Number(
+            data.numberOfPeople
+        ) < 1
+    ) {
+
+        throw new Error(
+            "Number of people must be at least 1."
+        );
+    }
 }
 
 
 /* =========================================
-   SAVE BOOKING TO GOOGLE SHEET
+   SAVE TO GOOGLE SHEET
 ========================================= */
 
 function saveBookingToSheet(
@@ -691,8 +751,7 @@ function saveBookingToSheet(
 
 
     /*
-       Automatically creates the sheet
-       if it doesn't exist.
+       Create sheet automatically.
     */
 
     if (!sheet) {
@@ -705,10 +764,12 @@ function saveBookingToSheet(
 
 
     /*
-       Create header if sheet is empty.
+       Create headers.
     */
 
-    if (sheet.getLastRow() === 0) {
+    if (
+        sheet.getLastRow() === 0
+    ) {
 
         sheet.appendRow([
 
@@ -742,6 +803,10 @@ function saveBookingToSheet(
         ]);
     }
 
+
+    /*
+       Save booking.
+    */
 
     sheet.appendRow([
 
@@ -777,7 +842,7 @@ function saveBookingToSheet(
 
 
 /* =========================================
-   GENERATE BOOKING ID
+   BOOKING ID
 ========================================= */
 
 function generateBookingId() {
@@ -793,7 +858,8 @@ function generateBookingId() {
     const random =
         Math.floor(
             1000 +
-            Math.random() * 9000
+            Math.random() *
+            9000
         );
 
 
@@ -807,16 +873,52 @@ function generateBookingId() {
 
 
 /* =========================================
-   JSON RESPONSE
+   JSON / JSONP RESPONSE
 ========================================= */
 
-function createJsonResponse(data) {
+function createResponse(
+    data,
+    callback
+) {
+
+    const json =
+        JSON.stringify(data);
+
+
+    /*
+       JSONP callback validation.
+    */
+
+    if (
+        callback &&
+        /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(
+            callback
+        )
+    ) {
+
+        return ContentService
+
+            .createTextOutput(
+                callback +
+                "(" +
+                json +
+                ");"
+            )
+
+            .setMimeType(
+                ContentService.MimeType.JAVASCRIPT
+            );
+    }
+
 
     return ContentService
+
         .createTextOutput(
-            JSON.stringify(data)
+            json
         )
+
         .setMimeType(
             ContentService.MimeType.JSON
         );
 }
+

@@ -21,7 +21,7 @@
 */
 
 const GOOGLE_APPS_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbwVfZzRJH66Xo5AA4Q7fe1Dtkb6emSV9vdspXRgA3Thm88w4N3vsJRIPWv5SD6NKKNMug/exec";
+    "https://script.google.com/macros/s/AKfycbxHRkxEoVGaFLxnFY6Kl-7wWNVbx14RYUhFu8FmLM50fbEXngiHisBRSSy04WZbpHc1-A/exec";
 
 
 /*

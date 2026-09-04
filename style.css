@@ -116,25 +116,25 @@ body {
 
         radial-gradient(
             circle at top left,
-            rgba(174, 185, 160, 0.30),
+            rgba(232, 237, 227, 0.35),
             transparent 34%
         ),
 
         radial-gradient(
             circle at top right,
-            rgba(234, 216, 181, 0.35),
+            rgba(234, 216, 181, 0.25),
             transparent 32%
         ),
 
         radial-gradient(
             circle at bottom right,
-            rgba(197, 143, 111, 0.20),
+            rgba(197, 143, 111, 0.12),
             transparent 35%
         ),
 
         radial-gradient(
             circle at bottom left,
-            rgba(102, 116, 90, 0.15),
+            rgba(77, 90, 67, 0.12),
             transparent 30%
         );
 }

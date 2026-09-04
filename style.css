@@ -226,88 +226,41 @@ body {
 
 
 /* =========================================
-   MAIN BOOKING CARD
+
+MAIN BOOKING CARD - VIBRANT GOLD LUXURY
+
 ========================================= */
-
-/*
-   IMPORTANT:
-   The entire center section is now
-   pink / rose / peach instead of white.
-*/
-
-.booking-card,
-.success-card {
-
+.booking-card, .success-card {
     position: relative;
-
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
-
+    background: linear-gradient( 135deg, #FFF8DC 0%, #FFE680 12%, #FFD700 35%, #FFC107 65%, #E6A800 100% );
     border-radius: 24px;
-
     padding: clamp(20px, 4vw, 40px);
-
-    border: 2px solid rgba(197, 138, 50, 0.4);
-
-    box-shadow:
-        0 22px 55px rgba(80, 25, 50, 0.22),
-        0 6px 20px rgba(196, 61, 120, 0.12);
-
+    border: 2px solid rgba(255, 215, 0, 0.65);
+    box-shadow: 0 25px 60px rgba(255, 191, 0, 0.25), 0 10px 30px rgba(255, 215, 0, 0.18);
     overflow: hidden;
 }
-
-
-/* Decorative upper-right glow */
-
-.booking-card::before,
-.success-card::before {
-
+/* Upper-right luxury glow */
+.booking-card::before, .success-card::before {
     content: "";
-
     position: absolute;
-
-    width: 260px;
-    height: 260px;
-
-    top: -150px;
+    width: 280px;
+    height: 280px;
+    top: -140px;
     right: -100px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255, 255, 255, 0.35),
-            transparent 70%
-        );
-
+    background: radial-gradient( circle, rgba(255, 255, 255, 0.55) 0%, rgba(255, 248, 220, 0.25) 45%, transparent 75% );
     border-radius: 50%;
-
     pointer-events: none;
 }
-
-
-/* Decorative lower-left glow */
-
-.booking-card::after,
-.success-card::after {
-
+/* Lower-left golden glow */
+.booking-card::after, .success-card::after {
     content: "";
-
     position: absolute;
-
-    width: 220px;
-    height: 220px;
-
+    width: 240px;
+    height: 240px;
     bottom: -140px;
     left: -100px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(247, 223, 170, 0.45),
-            transparent 70%
-        );
-
+    background: radial-gradient( circle, rgba(255, 215, 0, 0.45) 0%, rgba(255, 193, 7, 0.25) 45%, transparent 75% );
     border-radius: 50%;
-
     pointer-events: none;
 }
 

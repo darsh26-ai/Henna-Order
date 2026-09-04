@@ -1,5 +1,11 @@
 /* =========================================
-   GLOBAL
+   HENNA ART BOOKING
+   VIBRANT LUXURY FLORAL THEME
+========================================= */
+
+
+/* =========================================
+   COLOR VARIABLES
 ========================================= */
 
 :root {
@@ -17,16 +23,19 @@
 
     --light: #fff0f6;
 
-    --card-start: #fff0f6;
-    --card-middle: #fde3ed;
-    --card-end: #fff4df;
+    /* Main booking card colors */
+    --card-pink: #f6b9d0;
+    --card-rose: #f3a9c4;
+    --card-peach: #f8d2a7;
 
-    --input-bg: #fff8fb;
+    /* Input colors */
+    --input-bg: #fff0f6;
+    --input-border: #d98eac;
 
     --text: #35202a;
-    --muted: #74616a;
+    --muted: #705663;
 
-    --border: #e5b7c9;
+    --border: #dfa2ba;
 
     --success: #287a4d;
     --success-bg: #e8f7ee;
@@ -35,7 +44,7 @@
     --error-bg: #fdecea;
 
     --shadow:
-        0 18px 45px rgba(80, 25, 50, 0.18);
+        0 20px 55px rgba(80, 25, 50, 0.22);
 }
 
 
@@ -49,10 +58,12 @@
     padding: 0;
 }
 
+
 html {
     width: 100%;
     overflow-x: hidden;
 }
+
 
 body {
     min-height: 100vh;
@@ -65,31 +76,32 @@ body {
     background:
         radial-gradient(
             circle at 5% 5%,
-            rgba(242, 153, 188, 0.35),
+            rgba(242, 153, 188, 0.45),
             transparent 28%
         ),
         radial-gradient(
             circle at 95% 10%,
-            rgba(214, 157, 222, 0.30),
+            rgba(214, 174, 226, 0.35),
             transparent 28%
         ),
         radial-gradient(
             circle at 50% 100%,
-            rgba(247, 206, 143, 0.28),
+            rgba(247, 206, 143, 0.35),
             transparent 35%
         ),
-        #fff3f8;
+        #fff0f6;
 
     overflow-x: hidden;
 }
 
 
 /* =========================================
-   BACKGROUND
+   PAGE BACKGROUND
 ========================================= */
 
 .page-background {
     position: fixed;
+
     inset: 0;
 
     z-index: -1;
@@ -97,22 +109,22 @@ body {
     background:
         radial-gradient(
             circle at top left,
-            rgba(246, 182, 207, 0.55),
+            rgba(246, 182, 207, 0.65),
             transparent 32%
         ),
         radial-gradient(
             circle at top right,
-            rgba(215, 174, 226, 0.30),
+            rgba(215, 174, 226, 0.40),
             transparent 30%
         ),
         radial-gradient(
             circle at bottom right,
-            rgba(247, 203, 143, 0.25),
+            rgba(247, 203, 143, 0.32),
             transparent 35%
         ),
         radial-gradient(
             circle at bottom left,
-            rgba(205, 117, 157, 0.15),
+            rgba(205, 117, 157, 0.20),
             transparent 30%
         );
 }
@@ -146,17 +158,17 @@ body {
 }
 
 
-/* Decorative glow behind flower */
+/* Decorative glow */
 
 .hero::before {
     content: "";
 
     position: absolute;
 
-    width: 170px;
-    height: 170px;
+    width: 180px;
+    height: 180px;
 
-    top: -50px;
+    top: -55px;
     left: 50%;
 
     transform: translateX(-50%);
@@ -164,7 +176,7 @@ body {
     background:
         radial-gradient(
             circle,
-            rgba(236, 139, 177, 0.25),
+            rgba(236, 139, 177, 0.35),
             transparent 70%
         );
 
@@ -196,7 +208,7 @@ body {
     margin-bottom: 10px;
 
     text-shadow:
-        0 3px 10px rgba(122, 31, 75, 0.10);
+        0 3px 10px rgba(122, 31, 75, 0.12);
 }
 
 
@@ -214,8 +226,14 @@ body {
 
 
 /* =========================================
-   MAIN CARDS
+   MAIN BOOKING CARD
 ========================================= */
+
+/*
+   IMPORTANT:
+   The entire center section is now
+   pink / rose / peach instead of white.
+*/
 
 .booking-card,
 .success-card {
@@ -225,26 +243,27 @@ body {
     background:
         linear-gradient(
             135deg,
-            var(--card-start) 0%,
-            var(--card-middle) 48%,
-            var(--card-end) 100%
+            #f7bdd2 0%,
+            #f2a9c5 42%,
+            #f6c5bd 72%,
+            #f8d8ad 100%
         );
 
     border-radius: 24px;
 
     padding: clamp(20px, 4vw, 40px);
 
-    border: 1px solid rgba(196, 61, 120, 0.20);
+    border: 2px solid rgba(122, 31, 75, 0.18);
 
     box-shadow:
-        0 20px 55px rgba(80, 25, 50, 0.18),
-        0 5px 20px rgba(196, 61, 120, 0.08);
+        0 22px 55px rgba(80, 25, 50, 0.22),
+        0 6px 20px rgba(196, 61, 120, 0.12);
 
     overflow: hidden;
 }
 
 
-/* Decorative corner glow */
+/* Decorative upper-right glow */
 
 .booking-card::before,
 .success-card::before {
@@ -253,16 +272,16 @@ body {
 
     position: absolute;
 
-    width: 220px;
-    height: 220px;
+    width: 260px;
+    height: 260px;
 
-    top: -130px;
+    top: -150px;
     right: -100px;
 
     background:
         radial-gradient(
             circle,
-            rgba(227, 117, 160, 0.28),
+            rgba(255, 255, 255, 0.35),
             transparent 70%
         );
 
@@ -272,7 +291,7 @@ body {
 }
 
 
-/* Bottom decorative glow */
+/* Decorative lower-left glow */
 
 .booking-card::after,
 .success-card::after {
@@ -281,16 +300,16 @@ body {
 
     position: absolute;
 
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
 
-    bottom: -120px;
-    left: -80px;
+    bottom: -140px;
+    left: -100px;
 
     background:
         radial-gradient(
             circle,
-            rgba(247, 193, 103, 0.22),
+            rgba(247, 223, 170, 0.45),
             transparent 70%
         );
 
@@ -319,18 +338,18 @@ body {
 
     font-size: 1.9rem;
 
-    color: var(--primary);
+    color: var(--primary-dark);
 
     margin-bottom: 6px;
 }
 
 
 .section-heading p {
-    color: var(--muted);
+    color: #684d5a;
 }
 
 
-/* Gold decorative line */
+/* Decorative gold/pink line */
 
 .section-heading::after {
 
@@ -338,8 +357,8 @@ body {
 
     display: block;
 
-    width: 65px;
-    height: 3px;
+    width: 75px;
+    height: 4px;
 
     margin-top: 12px;
 
@@ -348,9 +367,13 @@ body {
     background:
         linear-gradient(
             90deg,
+            var(--primary),
             var(--secondary),
             var(--gold)
         );
+
+    box-shadow:
+        0 3px 8px rgba(122, 31, 75, 0.15);
 }
 
 
@@ -401,12 +424,12 @@ label {
 
 
 label span {
-    color: var(--secondary);
+    color: #9b235b;
 }
 
 
 /* =========================================
-   INPUTS
+   INPUTS / SELECT / TEXTAREA
 ========================================= */
 
 input,
@@ -418,7 +441,7 @@ textarea {
     max-width: 100%;
 
     border:
-        1px solid var(--border);
+        1px solid var(--input-border);
 
     border-radius: 13px;
 
@@ -428,17 +451,23 @@ textarea {
 
     color: var(--text);
 
+    /*
+       Light pink input background
+       instead of white.
+    */
+
     background:
         linear-gradient(
             135deg,
-            rgba(255, 255, 255, 0.85),
-            var(--input-bg)
+            #fff4f8,
+            #ffe4ee
         );
 
     outline: none;
 
     box-shadow:
-        inset 0 1px 3px rgba(122, 31, 75, 0.04);
+        inset 0 1px 4px rgba(122, 31, 75, 0.07),
+        0 2px 5px rgba(122, 31, 75, 0.05);
 
     transition:
         border-color 0.2s ease,
@@ -453,36 +482,48 @@ textarea {
 }
 
 
-/* Input hover */
+/* =========================================
+   INPUT HOVER
+========================================= */
 
 input:hover,
 select:hover,
 textarea:hover {
 
-    border-color: var(--pink);
+    border-color: var(--secondary);
 
     background:
         linear-gradient(
             135deg,
-            #fff8fb,
-            #fff1f6
+            #fff0f6,
+            #ffdce9
         );
+
+    box-shadow:
+        0 4px 12px rgba(122, 31, 75, 0.08);
 }
 
 
-/* Input focus */
+/* =========================================
+   INPUT FOCUS
+========================================= */
 
 input:focus,
 select:focus,
 textarea:focus {
 
-    border-color: var(--secondary);
+    border-color: var(--primary);
 
-    background: #fffafd;
+    background:
+        linear-gradient(
+            135deg,
+            #fff8fb,
+            #ffe8f1
+        );
 
     box-shadow:
-        0 0 0 4px rgba(196, 61, 120, 0.10),
-        0 6px 18px rgba(196, 61, 120, 0.08);
+        0 0 0 4px rgba(196, 61, 120, 0.12),
+        0 7px 18px rgba(122, 31, 75, 0.10);
 
     transform: translateY(-1px);
 }
@@ -510,13 +551,13 @@ select {
     background:
         linear-gradient(
             135deg,
-            #fff0f6,
-            #ffe5ef 50%,
-            #fff1d8
+            #ffe0ed 0%,
+            #ffd1df 48%,
+            #ffe6bd 100%
         );
 
     border:
-        1px solid rgba(197, 138, 50, 0.35);
+        2px solid rgba(197, 138, 50, 0.45);
 
     border-radius: 17px;
 
@@ -525,11 +566,11 @@ select {
     overflow-wrap: anywhere;
 
     box-shadow:
-        0 8px 25px rgba(122, 31, 75, 0.08);
+        0 10px 25px rgba(122, 31, 75, 0.12);
 }
 
 
-/* Gold accent */
+/* Decorative left border */
 
 .booking-summary::before {
 
@@ -538,16 +579,19 @@ select {
     position: absolute;
 
     left: 0;
+
     top: 15px;
+
     bottom: 15px;
 
-    width: 4px;
+    width: 5px;
 
     border-radius: 10px;
 
     background:
         linear-gradient(
             180deg,
+            var(--primary),
             var(--secondary),
             var(--gold)
         );
@@ -560,17 +604,17 @@ select {
 
     margin-bottom: 10px;
 
-    padding-left: 4px;
+    padding-left: 5px;
 }
 
 
 #summaryContent {
 
-    color: var(--muted);
+    color: #674e5a;
 
     line-height: 1.7;
 
-    padding-left: 4px;
+    padding-left: 5px;
 }
 
 
@@ -647,29 +691,26 @@ button:disabled {
 
     min-width: 220px;
 
-    color: white;
+    color: #ffffff;
 
     background:
         linear-gradient(
             135deg,
-            #7a1f4b,
-            #b52e70,
-            #d04f87
+            #6d1742,
+            #941f59,
+            #c43d78
         );
 
     box-shadow:
-        0 10px 22px rgba(122, 31, 75, 0.28),
-        0 0 0 rgba(196, 61, 120, 0);
+        0 10px 22px rgba(122, 31, 75, 0.30);
 }
 
-
-/* Hover glow */
 
 .primary-button:hover {
 
     box-shadow:
-        0 12px 28px rgba(122, 31, 75, 0.32),
-        0 0 18px rgba(196, 61, 120, 0.18);
+        0 13px 30px rgba(122, 31, 75, 0.36),
+        0 0 20px rgba(196, 61, 120, 0.18);
 }
 
 
@@ -700,15 +741,15 @@ button:disabled {
     background:
         linear-gradient(
             135deg,
-            #fff8fb,
-            #ffeaf2
+            #fff2f7,
+            #ffe3ed
         );
 
     border:
-        1px solid var(--secondary);
+        2px solid var(--secondary);
 
     box-shadow:
-        0 6px 15px rgba(122, 31, 75, 0.08);
+        0 6px 16px rgba(122, 31, 75, 0.10);
 }
 
 
@@ -717,12 +758,12 @@ button:disabled {
     background:
         linear-gradient(
             135deg,
-            #ffe6f0,
-            #fff1d8
+            #ffe0eb,
+            #ffe8c7
         );
 
     box-shadow:
-        0 8px 20px rgba(122, 31, 75, 0.14);
+        0 9px 22px rgba(122, 31, 75, 0.15);
 }
 
 
@@ -743,20 +784,20 @@ button:disabled {
     background:
         linear-gradient(
             135deg,
-            #18b957,
+            #16a84f,
             #25d366,
-            #35df78
+            #3bdd79
         );
 
     box-shadow:
-        0 8px 20px rgba(37, 211, 102, 0.25);
+        0 9px 22px rgba(37, 211, 102, 0.25);
 }
 
 
 .whatsapp-button:hover {
 
     box-shadow:
-        0 10px 25px rgba(37, 211, 102, 0.32);
+        0 12px 27px rgba(37, 211, 102, 0.32);
 }
 
 
@@ -778,15 +819,17 @@ button:disabled {
 }
 
 
-/* Success */
+/* =========================================
+   SUCCESS STATUS
+========================================= */
 
 .status-message.success {
 
     background:
         linear-gradient(
             135deg,
-            #e7f8ed,
-            #f1fff6
+            #e5f8ec,
+            #f4fff7
         );
 
     color: var(--success);
@@ -799,15 +842,17 @@ button:disabled {
 }
 
 
-/* Error */
+/* =========================================
+   ERROR STATUS
+========================================= */
 
 .status-message.error {
 
     background:
         linear-gradient(
             135deg,
-            #fde9e7,
-            #fff3f1
+            #fde6e4,
+            #fff4f2
         );
 
     color: var(--error);
@@ -817,15 +862,17 @@ button:disabled {
 }
 
 
-/* Loading */
+/* =========================================
+   LOADING STATUS
+========================================= */
 
 .status-message.loading {
 
     background:
         linear-gradient(
             135deg,
-            #fff4d4,
-            #fff9ea
+            #fff1c9,
+            #fff9e8
         );
 
     color: #7b5c00;
@@ -848,9 +895,9 @@ button:disabled {
     background:
         linear-gradient(
             135deg,
-            #fff0f6,
-            #fbe1ed 45%,
-            #fff0d2
+            #f7bdd2,
+            #f3aac6 45%,
+            #f8d9ae
         );
 }
 
@@ -875,8 +922,8 @@ button:disabled {
     background:
         linear-gradient(
             135deg,
-            #dff7e8,
-            #effff5
+            #dff8e8,
+            #f2fff6
         );
 
     color: var(--success);
@@ -889,9 +936,13 @@ button:disabled {
         3px solid rgba(40, 122, 77, 0.12);
 
     box-shadow:
-        0 8px 20px rgba(40, 122, 77, 0.12);
+        0 8px 22px rgba(40, 122, 77, 0.14);
 }
 
+
+/* =========================================
+   SUCCESS HEADING
+========================================= */
 
 .success-card h2 {
 
@@ -904,7 +955,7 @@ button:disabled {
 
 
 .success-card > p {
-    color: var(--muted);
+    color: #674e5a;
 }
 
 
@@ -923,12 +974,12 @@ button:disabled {
     background:
         linear-gradient(
             135deg,
-            rgba(255, 255, 255, 0.78),
-            rgba(255, 240, 247, 0.92)
+            #fff0f6,
+            #ffe3ed
         );
 
     border:
-        1px solid rgba(196, 61, 120, 0.15);
+        1px solid rgba(196, 61, 120, 0.20);
 
     text-align: left;
 
@@ -937,7 +988,8 @@ button:disabled {
     overflow-wrap: anywhere;
 
     box-shadow:
-        inset 0 1px 8px rgba(122, 31, 75, 0.04);
+        inset 0 1px 8px rgba(122, 31, 75, 0.05),
+        0 6px 16px rgba(122, 31, 75, 0.08);
 }
 
 
@@ -964,7 +1016,7 @@ footer {
 
     font-size: 0.9rem;
 
-    font-weight: 500;
+    font-weight: 600;
 }
 
 

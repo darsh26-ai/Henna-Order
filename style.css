@@ -89,7 +89,7 @@ body {
             rgba(247, 206, 143, 0.35),
             transparent 35%
         ),
-        #fff0f6;
+        #ccfcae; /* Changed from #fff0f6 to your new color */
 
     overflow-x: hidden;
 }

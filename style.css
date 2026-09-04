@@ -1,94 +1,72 @@
 /* =========================================
    HENNA ART BOOKING
-   VIBRANT LUXURY FLORAL THEME
+   WARM EARTHY LUXURY THEME
 ========================================= */
 
 
 /* =========================================
    COLOR VARIABLES
-Old color
-
-    --primary: #7a1f4b;
-    --primary-dark: #4d1230;
-
-    --secondary: #c43d78;
-    --pink: #e88caf;
-    --rose: #f3b5c9;
-
-    --gold: #c58a32;
-    --gold-light: #f7dfaa;
-
-    --accent: #f5cada;
-
-    --light: #fff0f6;
-
-
-    --card-pink: #f6b9d0;
-    --card-rose: #f3a9c4;
-    --card-peach: #f8d2a7;
-
-
-    --input-bg: #fff0f6;
-    --input-border: #d98eac;
-
-    --text: #35202a;
-    --muted: #705663;
-
-    --border: #dfa2ba;
-
-    --success: #287a4d;
-    --success-bg: #e8f7ee;
-
-    --error: #b3261e;
-    --error-bg: #fdecea;
-
-    --shadow:
-        0 20px 55px rgba(80, 25, 50, 0.22);
-
 ========================================= */
 
 :root {
-    /* Main Branding: Rich Natural Browns & Earthy Sage Greens */
-    --primary: #4d5e4b;       /* Deep moss/sage green for main buttons/headers */
-    --primary-dark: #354234;  /* Darker moss green for button hover states */
 
-    --secondary: #768f72;     /* Medium sage green accent */
-    --sage-light: #a7bfa4;    /* Light sage green for soft highlights */
-    --sage-pale: #e2ede0;     /* Very pale mint/sage for subtle states */
+    /* Main Brand Colors */
+    --primary: #5b3a29;
+    --primary-dark: #3f281d;
 
-    --gold: #b38646;          /* Muted, antique earthy gold if you still want metallic accents */
-    --gold-light: #ebd6b7;    /* Soft warm cream-gold */
+    /* Botanical / Henna Green */
+    --secondary: #66745a;
+    --secondary-dark: #4d5a43;
 
-    --accent: #c4ac93;        /* Soft earthy taupe/clay accent */
+    --sage-light: #aeb9a0;
+    --sage-pale: #e8ede3;
 
-    --light: #fbf7f0;         /* Clean, warm beige backdrop color */
+    /* Luxury Gold */
+    --gold: #b58a4a;
+    --gold-light: #ead8b5;
 
-    /* Main booking card colors (Cleaned from pink to match new sage canvas) */
-    --card-sage-light: #a7bfa4;
-    --card-sage-mid: #8fa88b;
-    --card-sage-deep: #5d755a;
+    /* Warm Accent */
+    --accent: #c58f6f;
+    --terracotta: #a9684f;
+    --terracotta-light: #ead1c3;
 
-    /* Input Fields (Kept crisp white with very soft, clean borders) */
-    --input-bg: #ffffff;        /* Pure white for maximum readability inside the input fields */
-    --input-border: #bbcfba;    /* Soft muted green border for input fields */
+    /* Page */
+    --light: #f8f3eb;
+    --white: #ffffff;
 
-    /* Typography (Pure deep espresso dark brown instead of purple-black) */
-    --text: #2c1e17;            /* Primary crisp dark brown text */
-    --muted: #615249;           /* Secondary/helper text color */
+    /* Cards */
+    --card-light: #fffaf3;
+    --card-cream: #f4eadb;
+    --card-sage: #dfe7d8;
 
-    --border: #d4cbd3;          /* Neutral gray-brown divider border line */
+    /* Inputs */
+    --input-bg: #fffdf9;
+    --input-border: #cfc4b4;
 
-    /* Alert / Validation System States */
-    --success: #3a5f43;         /* Deep botanical green */
-    --success-bg: #edf5ee;      /* Soft pale green alert background */
+    /* Text */
+    --text: #34261f;
+    --muted: #6f6259;
 
-    --error: #a63a3a;           /* Deep crimson red */
-    --error-bg: #f9ebeb;        /* Soft pale red alert background */
+    /* Borders */
+    --border: #d8cdbd;
 
-    /* Shadows (Updated from heavy purple/pink to a transparent earth-tone soft shadow) */
+    /* Success */
+    --success: #3f704b;
+    --success-bg: #edf5ed;
+
+    /* Error */
+    --error: #a3473f;
+    --error-bg: #f9ece9;
+
+    /* Loading */
+    --loading: #87682f;
+    --loading-bg: #f8f0dd;
+
+    /* Shadows */
     --shadow:
-        0 20px 55px rgba(44, 30, 23, 0.12);
+        0 20px 55px rgba(63, 40, 29, 0.14);
 }
+
 
 /* =========================================
    GLOBAL RESET
@@ -108,30 +86,35 @@ html {
 
 
 body {
+
     min-height: 100vh;
     width: 100%;
 
     font-family: "Poppins", sans-serif;
 
-    color: #2c1e17; /* Changed from color: var(--text) to your new color */
+    color: var(--text);
 
     background:
-    radial-gradient(
-        circle at 5% 5%,
-        rgba(143, 168, 139, 0.25), /* Soft Sage Green glow top-left */
-        transparent 35%
-    ),
-    radial-gradient(
-        circle at 95% 10%,
-        rgba(217, 198, 171, 0.35), /* Soft Warm Ochre glow top-right */
-        transparent 30%
-    ),
-    radial-gradient(
-        circle at 50% 100%,
-        rgba(196, 172, 147, 0.2), /* Muted Earthy Taupe glow at bottom */
-        transparent 40%
-    ),
-        #fbf7f0; /* Changed from #fff0f6 to your new color */
+
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(174, 185, 160, 0.35),
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 95% 8%,
+            rgba(234, 216, 181, 0.45),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(197, 143, 111, 0.16),
+            transparent 40%
+        ),
+
+        var(--light);
 
     overflow-x: hidden;
 }
@@ -142,6 +125,7 @@ body {
 ========================================= */
 
 .page-background {
+
     position: fixed;
 
     inset: 0;
@@ -149,24 +133,28 @@ body {
     z-index: -1;
 
     background:
+
         radial-gradient(
             circle at top left,
-            rgba(246, 182, 207, 0.65),
-            transparent 32%
+            rgba(174, 185, 160, 0.30),
+            transparent 34%
         ),
+
         radial-gradient(
             circle at top right,
-            rgba(215, 174, 226, 0.40),
-            transparent 30%
+            rgba(234, 216, 181, 0.35),
+            transparent 32%
         ),
+
         radial-gradient(
             circle at bottom right,
-            rgba(247, 203, 143, 0.32),
+            rgba(197, 143, 111, 0.20),
             transparent 35%
         ),
+
         radial-gradient(
             circle at bottom left,
-            rgba(205, 117, 157, 0.20),
+            rgba(102, 116, 90, 0.15),
             transparent 30%
         );
 }
@@ -177,6 +165,7 @@ body {
 ========================================= */
 
 .booking-page {
+
     width: min(100% - 30px, 1000px);
 
     margin: 0 auto;
@@ -190,6 +179,7 @@ body {
 ========================================= */
 
 .hero {
+
     position: relative;
 
     text-align: center;
@@ -203,12 +193,13 @@ body {
 /* Decorative glow */
 
 .hero::before {
+
     content: "";
 
     position: absolute;
 
-    width: 180px;
-    height: 180px;
+    width: 190px;
+    height: 190px;
 
     top: -55px;
     left: 50%;
@@ -216,9 +207,10 @@ body {
     transform: translateX(-50%);
 
     background:
+
         radial-gradient(
             circle,
-            rgba(236, 139, 177, 0.35),
+            rgba(181, 138, 74, 0.20),
             transparent 70%
         );
 
@@ -228,19 +220,25 @@ body {
 }
 
 
+/* Henna Icon */
+
 .henna-icon {
+
     font-size: 52px;
 
     margin-bottom: 8px;
 
     filter:
         drop-shadow(
-            0 5px 8px rgba(122, 31, 75, 0.20)
+            0 5px 8px rgba(91, 58, 41, 0.18)
         );
 }
 
 
+/* Hero Heading */
+
 .hero h1 {
+
     font-family: "Playfair Display", serif;
 
     color: var(--primary);
@@ -250,11 +248,12 @@ body {
     margin-bottom: 10px;
 
     text-shadow:
-        0 3px 10px rgba(122, 31, 75, 0.12);
+        0 3px 10px rgba(91, 58, 41, 0.10);
 }
 
 
 .hero p {
+
     max-width: 650px;
 
     margin: auto;
@@ -268,94 +267,106 @@ body {
 
 
 /* =========================================
-
-MAIN BOOKING CARD - VIBRANT GOLD LUXURY
-
+   MAIN BOOKING CARD
 ========================================= */
 
-.booking-card, .success-card {
+.booking-card,
+.success-card {
+
     position: relative;
-    /* Soft, luxurious sage green gradient that goes from light to deep sage */
-    background: linear-gradient(135deg, #a7bfa4 0%, #8fa88b 35%, #768f72 70%, #5d755a 100%);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #fffaf2 0%,
+            #f6eee2 50%,
+            #e8eee2 100%
+        );
+
     border-radius: 24px;
+
     padding: clamp(20px, 4vw, 40px);
-    /* Changed from gold to a soft, semi-transparent sage border */
-    border: 2px solid rgba(143, 168, 139, 0.4);
-    /* Changed drop shadows from vibrant yellow to a deep, natural earth-toned shadow */
-    box-shadow: 0 25px 60px rgba(44, 30, 23, 0.15), 0 10px 30px rgba(118, 143, 114, 0.12);
+
+    border:
+        1px solid rgba(181, 138, 74, 0.35);
+
+    box-shadow:
+
+        0 25px 60px rgba(63, 40, 29, 0.14),
+
+        0 8px 25px rgba(102, 116, 90, 0.10);
+
     overflow: hidden;
 }
 
-/* Upper-right luxury glow (Updated to crisp white/mint glow) */
-.booking-card::before, .success-card::before {
+
+/* Upper-right glow */
+
+.booking-card::before,
+.success-card::before {
+
     content: "";
+
     position: absolute;
+
     width: 280px;
     height: 280px;
+
     top: -140px;
     right: -100px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(240, 247, 238, 0.15) 45%, transparent 75%);
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.75) 0%,
+            rgba(234, 216, 181, 0.30) 45%,
+            transparent 75%
+        );
+
     border-radius: 50%;
+
     pointer-events: none;
 }
 
-/* Lower-left organic glow (Updated from golden to a soft deep sage accent glow) */
-.booking-card::after, .success-card::after {
+
+/* Lower-left glow */
+
+.booking-card::after,
+.success-card::after {
+
     content: "";
+
     position: absolute;
+
     width: 240px;
     height: 240px;
+
     bottom: -140px;
     left: -100px;
-    background: radial-gradient(circle, rgba(93, 117, 90, 0.3) 0%, rgba(118, 143, 114, 0.1) 45%, transparent 75%);
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(102, 116, 90, 0.20) 0%,
+            rgba(174, 185, 160, 0.12) 45%,
+            transparent 75%
+        );
+
     border-radius: 50%;
+
     pointer-events: none;
 }
 
-/* =========================================
-Old code 
-
-.booking-card, .success-card {
-    position: relative;
-    background: linear-gradient( 135deg, #FFF8DC 0%, #FFE680 12%, #FFD700 35%, #FFC107 65%, #E6A800 100% );
-    border-radius: 24px;
-    padding: clamp(20px, 4vw, 40px);
-    border: 2px solid rgba(255, 215, 0, 0.65);
-    box-shadow: 0 25px 60px rgba(255, 191, 0, 0.25), 0 10px 30px rgba(255, 215, 0, 0.18);
-    overflow: hidden;
-}
-
-.booking-card::before, .success-card::before {
-    content: "";
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    top: -140px;
-    right: -100px;
-    background: radial-gradient( circle, rgba(255, 255, 255, 0.55) 0%, rgba(255, 248, 220, 0.25) 45%, transparent 75% );
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.booking-card::after, .success-card::after {
-    content: "";
-    position: absolute;
-    width: 240px;
-    height: 240px;
-    bottom: -140px;
-    left: -100px;
-    background: radial-gradient( circle, rgba(255, 215, 0, 0.45) 0%, rgba(255, 193, 7, 0.25) 45%, transparent 75% );
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-========================================= */
 
 /* =========================================
    SECTION HEADING
 ========================================= */
 
 .section-heading {
+
     position: relative;
 
     margin-bottom: 25px;
@@ -370,18 +381,19 @@ Old code
 
     font-size: 1.9rem;
 
-    color: var(--primary-dark);
+    color: var(--primary);
 
     margin-bottom: 6px;
 }
 
 
 .section-heading p {
-    color: #684d5a;
+
+    color: var(--muted);
 }
 
 
-/* Decorative gold/pink line */
+/* Decorative line */
 
 .section-heading::after {
 
@@ -389,7 +401,7 @@ Old code
 
     display: block;
 
-    width: 75px;
+    width: 80px;
     height: 4px;
 
     margin-top: 12px;
@@ -397,15 +409,16 @@ Old code
     border-radius: 10px;
 
     background:
+
         linear-gradient(
             90deg,
             var(--primary),
-            var(--secondary),
-            var(--gold)
+            var(--gold),
+            var(--secondary)
         );
 
     box-shadow:
-        0 3px 8px rgba(122, 31, 75, 0.15);
+        0 3px 8px rgba(91, 58, 41, 0.14);
 }
 
 
@@ -435,6 +448,7 @@ Old code
 
 
 .full-width {
+
     grid-column: 1 / -1;
 }
 
@@ -451,12 +465,13 @@ label {
 
     font-size: 0.93rem;
 
-    color: var(--primary-dark);
+    color: var(--primary);
 }
 
 
 label span {
-    color: #9b235b;
+
+    color: var(--terracotta);
 }
 
 
@@ -483,25 +498,24 @@ textarea {
 
     color: var(--text);
 
-    /*
-       Light pink input background
-       instead of white.
-    */
-
     background:
         linear-gradient(
             135deg,
-            #fff4f8,
-            #ffe4ee
+            #fffdf9,
+            #f9f3ea
         );
 
     outline: none;
 
     box-shadow:
-        inset 0 1px 4px rgba(122, 31, 75, 0.07),
-        0 2px 5px rgba(122, 31, 75, 0.05);
+
+        inset
+        0 1px 4px rgba(63, 40, 29, 0.04),
+
+        0 2px 5px rgba(63, 40, 29, 0.04);
 
     transition:
+
         border-color 0.2s ease,
         box-shadow 0.2s ease,
         background 0.2s ease,
@@ -510,6 +524,7 @@ textarea {
 
 
 textarea {
+
     resize: vertical;
 }
 
@@ -527,12 +542,12 @@ textarea:hover {
     background:
         linear-gradient(
             135deg,
-            #fff0f6,
-            #ffdce9
+            #ffffff,
+            #f3f6ef
         );
 
     box-shadow:
-        0 4px 12px rgba(122, 31, 75, 0.08);
+        0 4px 12px rgba(63, 40, 29, 0.07);
 }
 
 
@@ -544,18 +559,17 @@ input:focus,
 select:focus,
 textarea:focus {
 
-    border-color: var(--primary);
+    border-color: var(--gold);
 
-    background:
-        linear-gradient(
-            135deg,
-            #fff8fb,
-            #ffe8f1
-        );
+    background: #fffefa;
 
     box-shadow:
-        0 0 0 4px rgba(196, 61, 120, 0.12),
-        0 7px 18px rgba(122, 31, 75, 0.10);
+
+        0 0 0 4px
+        rgba(181, 138, 74, 0.13),
+
+        0 7px 18px
+        rgba(63, 40, 29, 0.09);
 
     transform: translateY(-1px);
 }
@@ -566,6 +580,7 @@ textarea:focus {
 ========================================= */
 
 select {
+
     cursor: pointer;
 }
 
@@ -581,15 +596,16 @@ select {
     width: 100%;
 
     background:
+
         linear-gradient(
             135deg,
-            #ffe0ed 0%,
-            #ffd1df 48%,
-            #ffe6bd 100%
+            #f1e7d7 0%,
+            #f8f1e6 55%,
+            #e7eee1 100%
         );
 
     border:
-        2px solid rgba(197, 138, 50, 0.45);
+        1px solid rgba(181, 138, 74, 0.38);
 
     border-radius: 17px;
 
@@ -598,7 +614,9 @@ select {
     overflow-wrap: anywhere;
 
     box-shadow:
-        0 10px 25px rgba(122, 31, 75, 0.12);
+
+        0 10px 25px
+        rgba(63, 40, 29, 0.08);
 }
 
 
@@ -613,7 +631,6 @@ select {
     left: 0;
 
     top: 15px;
-
     bottom: 15px;
 
     width: 5px;
@@ -621,11 +638,12 @@ select {
     border-radius: 10px;
 
     background:
+
         linear-gradient(
             180deg,
             var(--primary),
-            var(--secondary),
-            var(--gold)
+            var(--gold),
+            var(--secondary)
         );
 }
 
@@ -642,7 +660,7 @@ select {
 
 #summaryContent {
 
-    color: #674e5a;
+    color: var(--muted);
 
     line-height: 1.7;
 
@@ -688,6 +706,7 @@ button,
     text-align: center;
 
     transition:
+
         transform 0.2s ease,
         box-shadow 0.2s ease,
         opacity 0.2s ease;
@@ -709,6 +728,7 @@ button:active,
 
 
 button:disabled {
+
     cursor: not-allowed;
 }
 
@@ -726,27 +746,32 @@ button:disabled {
     color: #ffffff;
 
     background:
+
         linear-gradient(
             135deg,
-            #6d1742,
-            #941f59,
-            #c43d78
+            #4b3023,
+            #65402d,
+            #7d5038
         );
 
     box-shadow:
-        0 10px 22px rgba(122, 31, 75, 0.30);
+
+        0 10px 22px
+        rgba(63, 40, 29, 0.25);
 }
 
 
 .primary-button:hover {
 
     box-shadow:
-        0 13px 30px rgba(122, 31, 75, 0.36),
-        0 0 20px rgba(196, 61, 120, 0.18);
+
+        0 13px 30px
+        rgba(63, 40, 29, 0.32),
+
+        0 0 20px
+        rgba(181, 138, 74, 0.16);
 }
 
-
-/* Disabled */
 
 .primary-button:disabled {
 
@@ -771,31 +796,37 @@ button:disabled {
     color: var(--primary);
 
     background:
+
         linear-gradient(
             135deg,
-            #fff2f7,
-            #ffe3ed
+            #ffffff,
+            #edf2e9
         );
 
     border:
         2px solid var(--secondary);
 
     box-shadow:
-        0 6px 16px rgba(122, 31, 75, 0.10);
+
+        0 6px 16px
+        rgba(63, 40, 29, 0.08);
 }
 
 
 .secondary-button:hover {
 
     background:
+
         linear-gradient(
             135deg,
-            #ffe0eb,
-            #ffe8c7
+            #edf2e9,
+            #f5ead9
         );
 
     box-shadow:
-        0 9px 22px rgba(122, 31, 75, 0.15);
+
+        0 9px 22px
+        rgba(63, 40, 29, 0.13);
 }
 
 
@@ -814,22 +845,27 @@ button:disabled {
     color: white;
 
     background:
+
         linear-gradient(
             135deg,
-            #16a84f,
-            #25d366,
-            #3bdd79
+            #247a45,
+            #2e9657,
+            #3aaa68
         );
 
     box-shadow:
-        0 9px 22px rgba(37, 211, 102, 0.25);
+
+        0 9px 22px
+        rgba(47, 150, 87, 0.20);
 }
 
 
 .whatsapp-button:hover {
 
     box-shadow:
-        0 12px 27px rgba(37, 211, 102, 0.32);
+
+        0 12px 27px
+        rgba(47, 150, 87, 0.28);
 }
 
 
@@ -858,19 +894,22 @@ button:disabled {
 .status-message.success {
 
     background:
+
         linear-gradient(
             135deg,
-            #e5f8ec,
-            #f4fff7
+            #e6f1e5,
+            #f5faf3
         );
 
     color: var(--success);
 
     border:
-        1px solid rgba(40, 122, 77, 0.25);
+        1px solid rgba(63, 112, 75, 0.25);
 
     box-shadow:
-        0 5px 15px rgba(40, 122, 77, 0.08);
+
+        0 5px 15px
+        rgba(63, 112, 75, 0.08);
 }
 
 
@@ -881,16 +920,17 @@ button:disabled {
 .status-message.error {
 
     background:
+
         linear-gradient(
             135deg,
-            #fde6e4,
-            #fff4f2
+            #f8e6e3,
+            #fff5f3
         );
 
     color: var(--error);
 
     border:
-        1px solid rgba(179, 38, 30, 0.22);
+        1px solid rgba(163, 71, 63, 0.22);
 }
 
 
@@ -901,16 +941,17 @@ button:disabled {
 .status-message.loading {
 
     background:
+
         linear-gradient(
             135deg,
-            #fff1c9,
-            #fff9e8
+            #f6ecd4,
+            #fffaf0
         );
 
-    color: #7b5c00;
+    color: var(--loading);
 
     border:
-        1px solid rgba(197, 138, 50, 0.25);
+        1px solid rgba(181, 138, 74, 0.25);
 }
 
 
@@ -925,11 +966,12 @@ button:disabled {
     text-align: center;
 
     background:
+
         linear-gradient(
             135deg,
-            #f7bdd2,
-            #f3aac6 45%,
-            #f8d9ae
+            #eef2e8 0%,
+            #f7efe2 50%,
+            #ead8c5 100%
         );
 }
 
@@ -952,10 +994,11 @@ button:disabled {
     border-radius: 50%;
 
     background:
+
         linear-gradient(
             135deg,
-            #dff8e8,
-            #f2fff6
+            #e0eee0,
+            #f7fbf4
         );
 
     color: var(--success);
@@ -965,10 +1008,12 @@ button:disabled {
     font-weight: 700;
 
     border:
-        3px solid rgba(40, 122, 77, 0.12);
+        3px solid rgba(63, 112, 75, 0.12);
 
     box-shadow:
-        0 8px 22px rgba(40, 122, 77, 0.14);
+
+        0 8px 22px
+        rgba(63, 112, 75, 0.14);
 }
 
 
@@ -978,7 +1023,7 @@ button:disabled {
 
 .success-card h2 {
 
-    color: var(--success);
+    color: var(--primary);
 
     margin-bottom: 8px;
 
@@ -987,7 +1032,8 @@ button:disabled {
 
 
 .success-card > p {
-    color: #674e5a;
+
+    color: var(--muted);
 }
 
 
@@ -1004,14 +1050,15 @@ button:disabled {
     border-radius: 16px;
 
     background:
+
         linear-gradient(
             135deg,
-            #fff0f6,
-            #ffe3ed
+            #fffaf3,
+            #f2e9dc
         );
 
     border:
-        1px solid rgba(196, 61, 120, 0.20);
+        1px solid rgba(181, 138, 74, 0.25);
 
     text-align: left;
 
@@ -1020,8 +1067,13 @@ button:disabled {
     overflow-wrap: anywhere;
 
     box-shadow:
-        inset 0 1px 8px rgba(122, 31, 75, 0.05),
-        0 6px 16px rgba(122, 31, 75, 0.08);
+
+        inset
+        0 1px 8px
+        rgba(63, 40, 29, 0.04),
+
+        0 6px 16px
+        rgba(63, 40, 29, 0.06);
 }
 
 
@@ -1030,6 +1082,7 @@ button:disabled {
 ========================================= */
 
 .hidden {
+
     display: none !important;
 }
 
@@ -1175,3 +1228,4 @@ footer {
         padding: 14px;
     }
 }
+

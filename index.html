@@ -1,217 +1,421 @@
+
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
 
-        <title>Henna Art Booking</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-        <style>
-            <?!= include("style"); ?>
-        </style>
+    <title>Henna Art Booking</title>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-        <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-        />
-    </head>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    <body>
-        <div class="page-background"></div>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-        <main class="booking-page">
-            <!-- HEADER -->
-            <section class="hero">
-                <div class="henna-icon">🌸</div>
+<body>
 
-                <h1>Henna Art Booking</h1>
+<div class="page-background"></div>
 
-                <p>Book your Henna appointment online. Available times are automatically checked before booking.</p>
-            </section>
+<main class="booking-page">
 
-            <!-- BOOKING CARD -->
-            <section class="booking-card">
-                <div class="section-heading">
-                    <h2>Book Your Appointment</h2>
+    <!-- HEADER -->
+    <section class="hero">
 
-                    <p>Please fill in your details below.</p>
+        <div class="henna-icon">🌸</div>
+
+        <h1>Henna Art Booking</h1>
+
+        <p>
+            Book your Henna appointment online.
+            Available times are automatically checked before booking.
+        </p>
+
+    </section>
+
+
+    <!-- BOOKING CARD -->
+    <section class="booking-card">
+
+        <div class="section-heading">
+
+            <h2>Book Your Appointment</h2>
+
+            <p>Please fill in your details below.</p>
+
+        </div>
+
+
+        <!-- STATUS -->
+        <div id="statusMessage"
+             class="status-message hidden">
+        </div>
+
+
+        <!-- BOOKING FORM -->
+        <form id="bookingForm">
+
+            <!-- CUSTOMER -->
+            <div class="form-group">
+
+                <label for="customerName">
+                    Full Name <span>*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Enter your full name"
+                    required>
+
+            </div>
+
+
+            <!-- PHONE -->
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number <span>*</span>
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter your phone number"
+                    required>
+
+            </div>
+
+
+            <!-- EMAIL -->
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email address">
+
+            </div>
+
+
+            <!-- ARTIST -->
+            <div class="form-group">
+
+                <label for="artist">
+                    Henna Artist <span>*</span>
+                </label>
+
+                <select id="artist" required>
+
+                    <option value="">
+                        Select Henna Artist
+                    </option>
+
+                    <option value="Nirali">
+                        Nirali
+                    </option>
+
+                    <option value="Kaushika">
+                        Kaushika
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SERVICE -->
+            <div class="form-group">
+
+                <label for="service">
+                    Henna Service <span>*</span>
+                </label>
+
+                <select id="service" required>
+
+                    <option value="">
+                        Select a service
+                    </option>
+
+                    <option value="Bridal Henna">
+                        Bridal Henna
+                    </option>
+
+                    <option value="Party Henna">
+                        Party Henna
+                    </option>
+
+                    <option value="Engagement Henna">
+                        Engagement Henna
+                    </option>
+
+                    <option value="Baby Shower Henna">
+                        Baby Shower Henna
+                    </option>
+
+                    <option value="Festival Henna">
+                        Festival Henna
+                    </option>
+
+                    <option value="Group Henna">
+                        Group Henna
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- DATE -->
+            <div class="form-group">
+
+                <label for="bookingDate">
+                    Event Date <span>*</span>
+                </label>
+
+                <input
+                    type="date"
+                    id="bookingDate"
+                    required>
+
+            </div>
+
+
+            <!-- START TIME -->
+            <div class="form-group">
+
+                <label for="startTime">
+                    Start Time <span>*</span>
+                </label>
+
+                <input
+                    type="time"
+                    id="startTime"
+                    required>
+
+            </div>
+
+
+            <!-- DURATION -->
+            <div class="form-group">
+
+                <label for="duration">
+                    Appointment Duration <span>*</span>
+                </label>
+
+                <select id="duration" required>
+
+                    <option value="">
+                        Select duration
+                    </option>
+
+                    <option value="1">
+                        1 Hour
+                    </option>
+
+                    <option value="1.5">
+                        1 Hour 30 Minutes
+                    </option>
+
+                    <option value="2">
+                        2 Hours
+                    </option>
+
+                    <option value="2.5">
+                        2 Hours 30 Minutes
+                    </option>
+
+                    <option value="3">
+                        3 Hours
+                    </option>
+
+                    <option value="4">
+                        4 Hours
+                    </option>
+
+                    <option value="5">
+                        5 Hours
+                    </option>
+
+                    <option value="6">
+                        6 Hours
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- PEOPLE -->
+            <div class="form-group">
+
+                <label for="numberOfPeople">
+                    Number of People <span>*</span>
+                </label>
+
+                <input
+                    type="number"
+                    id="numberOfPeople"
+                    min="1"
+                    value="1"
+                    required>
+
+            </div>
+
+
+            <!-- LOCATION -->
+            <div class="form-group full-width">
+
+                <label for="location">
+                    Event Location <span>*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Enter event address or city"
+                    required>
+
+            </div>
+
+
+            <!-- NOTES -->
+            <div class="form-group full-width">
+
+                <label for="notes">
+                    Additional Notes
+                </label>
+
+                <textarea
+                    id="notes"
+                    rows="4"
+                    placeholder="Tell us anything important about your booking..."></textarea>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="booking-summary full-width">
+
+                <h3>
+                    📅 Appointment Summary
+                </h3>
+
+                <div id="summaryContent">
+                    Select an artist, date, time and duration.
                 </div>
 
-                <!-- STATUS MESSAGE -->
-                <div id="statusMessage" class="status-message hidden"></div>
+            </div>
 
-                <!-- BOOKING FORM -->
-                <form id="bookingForm">
-                    <!-- CUSTOMER NAME -->
-                    <div class="form-group">
-                        <label for="customerName"> Full Name <span>*</span> </label>
 
-                        <input type="text" id="customerName" placeholder="Enter your full name" required />
-                    </div>
+            <!-- BUTTONS -->
+            <div class="button-area full-width">
 
-                    <!-- PHONE -->
-                    <div class="form-group">
-                        <label for="phone"> Phone Number <span>*</span> </label>
+                <button
+                    type="button"
+                    id="checkAvailabilityBtn"
+                    class="secondary-button">
 
-                        <input type="tel" id="phone" placeholder="Enter your phone number" required />
-                    </div>
+                    🔍 Check Availability
 
-                    <!-- EMAIL -->
-                    <div class="form-group">
-                        <label for="email"> Email </label>
+                </button>
 
-                        <input type="email" id="email" placeholder="Enter your email address" />
-                    </div>
 
-                    <!-- ARTIST -->
-                    <div class="form-group">
-                        <label for="artist"> Henna Artist <span>*</span> </label>
+                <button
+                    type="submit"
+                    id="confirmBookingBtn"
+                    class="primary-button"
+                    disabled>
 
-                        <select id="artist" required>
-                            <option value="">Select Henna Artist</option>
+                    🌸 Confirm Booking
 
-                            <option value="Nirali">Nirali</option>
+                </button>
 
-                            <option value="Kaushika">Kaushika</option>
-                        </select>
-                    </div>
+            </div>
 
-                    <!-- SERVICE -->
-                    <div class="form-group">
-                        <label for="service"> Henna Service <span>*</span> </label>
+        </form>
 
-                        <select id="service" required>
-                            <option value="">Select a service</option>
+    </section>
 
-                            <option value="Bridal Henna">Bridal Henna</option>
 
-                            <option value="Party Henna">Party Henna</option>
+    <!-- SUCCESS -->
+    <section
+        id="successCard"
+        class="success-card hidden">
 
-                            <option value="Engagement Henna">Engagement Henna</option>
+        <div class="success-icon">
+            ✓
+        </div>
 
-                            <option value="Baby Shower Henna">Baby Shower Henna</option>
+        <h2>
+            Booking Confirmed!
+        </h2>
 
-                            <option value="Festival Henna">Festival Henna</option>
+        <p>
+            Your Henna appointment has been successfully added.
+        </p>
 
-                            <option value="Group Henna">Group Henna</option>
 
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
+        <div
+            id="bookingDetails"
+            class="booking-details">
+        </div>
 
-                    <!-- DATE -->
-                    <div class="form-group">
-                        <label for="bookingDate"> Event Date <span>*</span> </label>
 
-                        <input type="date" id="bookingDate" required />
-                    </div>
+        <a
+            id="whatsappButton"
+            href="#"
+            target="_blank"
+            rel="noopener"
+            class="whatsapp-button">
 
-                    <!-- START TIME -->
-                    <div class="form-group">
-                        <label for="startTime"> Start Time <span>*</span> </label>
+            💬 Open WhatsApp Booking Message
 
-                        <input type="time" id="startTime" required />
-                    </div>
+        </a>
 
-                    <!-- DURATION -->
-                    <div class="form-group">
-                        <label for="duration"> Appointment Duration <span>*</span> </label>
 
-                        <select id="duration" required>
-                            <option value="">Select duration</option>
+        <button
+            id="newBookingBtn"
+            class="secondary-button">
 
-                            <option value="1">1 Hour</option>
+            + Create Another Booking
 
-                            <option value="1.5">1 Hour 30 Minutes</option>
+        </button>
 
-                            <option value="2">2 Hours</option>
+    </section>
 
-                            <option value="2.5">2 Hours 30 Minutes</option>
 
-                            <option value="3">3 Hours</option>
+    <footer>
 
-                            <option value="4">4 Hours</option>
+        <p>
+            🌸 Henna Art Booking
+        </p>
 
-                            <option value="5">5 Hours</option>
+    </footer>
 
-                            <option value="6">6 Hours</option>
-                        </select>
-                    </div>
+</main>
 
-                    <!-- NUMBER OF PEOPLE -->
-                    <div class="form-group">
-                        <label for="numberOfPeople"> Number of People <span>*</span> </label>
 
-                        <input type="number" id="numberOfPeople" min="1" value="1" required />
-                    </div>
+<script src="app.js"></script>
 
-                    <!-- LOCATION -->
-                    <div class="form-group full-width">
-                        <label for="location"> Event Location <span>*</span> </label>
-
-                        <input type="text" id="location" placeholder="Enter event address or city" required />
-                    </div>
-
-                    <!-- NOTES -->
-                    <div class="form-group full-width">
-                        <label for="notes"> Additional Notes </label>
-
-                        <textarea
-                            id="notes"
-                            rows="4"
-                            placeholder="Tell us anything important about your booking..."
-                        ></textarea>
-                    </div>
-
-                    <!-- SUMMARY -->
-                    <div class="booking-summary full-width">
-                        <h3>📅 Appointment Summary</h3>
-
-                        <div id="summaryContent">Select an artist, date, time and duration.</div>
-                    </div>
-
-                    <!-- BUTTONS -->
-                    <div class="button-area full-width">
-                        <button type="button" id="checkAvailabilityBtn" class="secondary-button">
-                            🔍 Check Availability
-                        </button>
-
-                        <button type="submit" id="confirmBookingBtn" class="primary-button" disabled>
-                            🌸 Confirm Booking
-                        </button>
-                    </div>
-                </form>
-            </section>
-
-            <!-- SUCCESS SECTION -->
-            <section id="successCard" class="success-card hidden">
-                <div class="success-icon">✓</div>
-
-                <h2>Booking Confirmed!</h2>
-
-                <p>Your Henna appointment has been successfully added.</p>
-
-                <div id="bookingDetails" class="booking-details"></div>
-
-                <a id="whatsappButton" href="#" target="_blank" class="whatsapp-button">
-                    💬 Open WhatsApp Booking Message
-                </a>
-
-                <button id="newBookingBtn" class="secondary-button">+ Create Another Booking</button>
-            </section>
-
-            <footer>
-                <p>🌸 Henna Art Booking</p>
-            </footer>
-        </main>
-
-        <script>
-            <?!= include("app"); ?>
-        </script>
-    </body>
+</body>
 </html>

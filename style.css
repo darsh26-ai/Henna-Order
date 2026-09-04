@@ -94,27 +94,7 @@ body {
 
     color: var(--text);
 
-    background:
-
-        radial-gradient(
-            circle at 5% 5%,
-            rgba(174, 185, 160, 0.35),
-            transparent 32%
-        ),
-
-        radial-gradient(
-            circle at 95% 8%,
-            rgba(234, 216, 181, 0.45),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(197, 143, 111, 0.16),
-            transparent 40%
-        ),
-
-        var(--light);
+    background: #aeb9a0;
 
     overflow-x: hidden;
 }

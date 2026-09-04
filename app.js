@@ -1,6 +1,6 @@
 /* =========================================
-   HENNA BOOKING APPLICATION
-   GOOGLE APPS SCRIPT VERSION
+   HENNA ART BOOKING
+   GITHUB PAGES FRONTEND
 ========================================= */
 
 "use strict";
@@ -11,13 +11,28 @@
 ========================================= */
 
 /*
-   WhatsApp number that receives the booking.
+   IMPORTANT:
+   Replace this with your deployed
+   Google Apps Script Web App URL.
 
-   Country code + number.
-   Do not use +, spaces or brackets.
+   Example:
+
+   https://script.google.com/macros/s/XXXXXXXXXXXX/exec
 */
 
-const WHATSAPP_NUMBER = "17279676639";
+const GOOGLE_APPS_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbwVfZzRJH66Xo5AA4Q7fe1Dtkb6emSV9vdspXRgA3Thm88w4N3vsJRIPWv5SD6NKKNMug/exec";
+
+
+/*
+   WhatsApp number.
+
+   Country code + phone number.
+   No +, spaces or brackets.
+*/
+
+const WHATSAPP_NUMBER =
+    "17279676639";
 
 
 /* =========================================
@@ -86,14 +101,15 @@ const newBookingBtn =
 
 
 /* =========================================
-   APPLICATION STATE
+   STATE
 ========================================= */
 
 let bookingAvailable = false;
+let requestInProgress = false;
 
 
 /* =========================================
-   SET MINIMUM DATE
+   DATE
 ========================================= */
 
 function setMinimumDate() {
@@ -117,7 +133,7 @@ function setMinimumDate() {
 
 
 /* =========================================
-   DATE FORMATTING
+   FORMAT DATE
 ========================================= */
 
 function formatDate(dateValue) {
@@ -142,7 +158,7 @@ function formatDate(dateValue) {
 
 
 /* =========================================
-   TIME FORMATTING
+   FORMAT TIME
 ========================================= */
 
 function formatTime(timeValue) {
@@ -151,15 +167,21 @@ function formatTime(timeValue) {
         return "";
     }
 
-    const [hours, minutes] =
+    const parts =
         timeValue.split(":");
+
+    const hours =
+        Number(parts[0]);
+
+    const minutes =
+        Number(parts[1]);
 
     const time =
         new Date();
 
     time.setHours(
-        Number(hours),
-        Number(minutes),
+        hours,
+        minutes,
         0,
         0
     );
@@ -175,7 +197,7 @@ function formatTime(timeValue) {
 
 
 /* =========================================
-   CALCULATE END TIME
+   END TIME
 ========================================= */
 
 function calculateEndTime() {
@@ -190,18 +212,15 @@ function calculateEndTime() {
 
     const start =
         new Date(
-            `${bookingDate.value}T${startTime.value}`
+            `${bookingDate.value}T${startTime.value}:00`
         );
-
-    const durationMilliseconds =
-        Number(duration.value) *
-        60 *
-        60 *
-        1000;
 
     return new Date(
         start.getTime() +
-        durationMilliseconds
+        Number(duration.value) *
+        60 *
+        60 *
+        1000
     );
 }
 
@@ -212,84 +231,20 @@ function calculateEndTime() {
 
 function formatEndTime() {
 
-    const endTime =
+    const end =
         calculateEndTime();
 
-    if (!endTime) {
+    if (!end) {
         return "";
     }
 
-    return endTime.toLocaleTimeString(
+    return end.toLocaleTimeString(
         "en-US",
         {
             hour: "numeric",
             minute: "2-digit"
         }
     );
-}
-
-
-/* =========================================
-   UPDATE SUMMARY
-========================================= */
-
-function updateSummary() {
-
-    const selectedArtist =
-        artist.value;
-
-    const selectedDate =
-        bookingDate.value;
-
-    const selectedStartTime =
-        startTime.value;
-
-    const selectedDuration =
-        duration.value;
-
-
-    if (
-        !selectedArtist ||
-        !selectedDate ||
-        !selectedStartTime ||
-        !selectedDuration
-    ) {
-
-        summaryContent.innerHTML =
-            "Select an artist, date, time and duration.";
-
-        return;
-    }
-
-
-    const formattedDate =
-        formatDate(selectedDate);
-
-    const formattedStart =
-        formatTime(selectedStartTime);
-
-    const formattedEnd =
-        formatEndTime();
-
-
-    summaryContent.innerHTML = `
-        <strong>Artist:</strong>
-        ${escapeHtml(selectedArtist)}
-        <br>
-
-        <strong>Date:</strong>
-        ${escapeHtml(formattedDate)}
-        <br>
-
-        <strong>Time:</strong>
-        ${escapeHtml(formattedStart)}
-        –
-        ${escapeHtml(formattedEnd)}
-        <br>
-
-        <strong>Duration:</strong>
-        ${escapeHtml(selectedDuration)} hour(s)
-    `;
 }
 
 
@@ -303,17 +258,69 @@ function escapeHtml(value) {
         document.createElement("div");
 
     div.textContent =
-        value || "";
+        value == null ? "" : String(value);
 
     return div.innerHTML;
 }
 
 
 /* =========================================
-   SHOW STATUS
+   UPDATE SUMMARY
 ========================================= */
 
-function showStatus(message, type) {
+function updateSummary() {
+
+    if (
+        !artist.value ||
+        !bookingDate.value ||
+        !startTime.value ||
+        !duration.value
+    ) {
+
+        summaryContent.innerHTML =
+            "Select an artist, date, time and duration.";
+
+        return;
+    }
+
+    summaryContent.innerHTML = `
+
+        <strong>Artist:</strong>
+        ${escapeHtml(artist.value)}
+        <br>
+
+        <strong>Date:</strong>
+        ${escapeHtml(
+            formatDate(bookingDate.value)
+        )}
+        <br>
+
+        <strong>Time:</strong>
+        ${escapeHtml(
+            formatTime(startTime.value)
+        )}
+        –
+        ${escapeHtml(
+            formatEndTime()
+        )}
+        <br>
+
+        <strong>Duration:</strong>
+        ${escapeHtml(duration.value)}
+        hour(s)
+
+    `;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+function showStatus(
+    message,
+    type
+) {
 
     statusMessage.textContent =
         message;
@@ -322,10 +329,6 @@ function showStatus(message, type) {
         `status-message ${type}`;
 }
 
-
-/* =========================================
-   HIDE STATUS
-========================================= */
 
 function hideStatus() {
 
@@ -338,7 +341,7 @@ function hideStatus() {
 
 
 /* =========================================
-   VALIDATE APPOINTMENT FIELDS
+   VALIDATE
 ========================================= */
 
 function validateAppointmentFields() {
@@ -353,7 +356,6 @@ function validateAppointmentFields() {
         return false;
     }
 
-
     if (!bookingDate.value) {
 
         showStatus(
@@ -363,7 +365,6 @@ function validateAppointmentFields() {
 
         return false;
     }
-
 
     if (!startTime.value) {
 
@@ -375,7 +376,6 @@ function validateAppointmentFields() {
         return false;
     }
 
-
     if (!duration.value) {
 
         showStatus(
@@ -386,17 +386,15 @@ function validateAppointmentFields() {
         return false;
     }
 
-
     const start =
         new Date(
-            `${bookingDate.value}T${startTime.value}`
+            `${bookingDate.value}T${startTime.value}:00`
         );
 
-    const now =
-        new Date();
-
-
-    if (start < now) {
+    if (
+        Number.isNaN(start.getTime()) ||
+        start.getTime() <= Date.now()
+    ) {
 
         showStatus(
             "Please select a future date and time.",
@@ -405,7 +403,6 @@ function validateAppointmentFields() {
 
         return false;
     }
-
 
     return true;
 }
@@ -417,9 +414,8 @@ function validateAppointmentFields() {
 
 function getBookingData() {
 
-    const endDateTime =
+    const end =
         calculateEndTime();
-
 
     return {
 
@@ -444,11 +440,6 @@ function getBookingData() {
         startTime:
             startTime.value,
 
-        endTime:
-            endDateTime
-                ? endDateTime.toISOString()
-                : "",
-
         duration:
             Number(duration.value),
 
@@ -459,32 +450,232 @@ function getBookingData() {
             locationInput.value.trim(),
 
         notes:
-            notes.value.trim()
+            notes.value.trim(),
+
+        endTime:
+            end
+                ? end.toISOString()
+                : ""
     };
 }
 
 
 /* =========================================
-   CHECK AVAILABILITY
-   GOOGLE.SCRIPT.RUN
+   JSONP BACKEND REQUEST
 ========================================= */
 
-function checkAvailability() {
+function callBackend(
+    action,
+    data
+) {
 
-    bookingAvailable = false;
+    return new Promise(
+        function(resolve, reject) {
+
+            if (
+                !GOOGLE_APPS_SCRIPT_URL ||
+                GOOGLE_APPS_SCRIPT_URL.includes(
+                    "PASTE_YOUR_WEB_APP_URL_HERE"
+                )
+            ) {
+
+                reject(
+                    new Error(
+                        "Google Apps Script Web App URL has not been configured."
+                    )
+                );
+
+                return;
+            }
+
+
+            const callbackName =
+                "hennaCallback_" +
+                Date.now() +
+                "_" +
+                Math.floor(
+                    Math.random() * 100000
+                );
+
+
+            const params =
+                new URLSearchParams();
+
+
+            params.set(
+                "action",
+                action
+            );
+
+
+            params.set(
+                "callback",
+                callbackName
+            );
+
+
+            Object.keys(data || {})
+                .forEach(function(key) {
+
+                    const value =
+                        data[key];
+
+                    if (
+                        value !== undefined &&
+                        value !== null
+                    ) {
+
+                        params.set(
+                            key,
+                            String(value)
+                        );
+                    }
+
+                });
+
+
+            const script =
+                document.createElement(
+                    "script"
+                );
+
+
+            let finished =
+                false;
+
+
+            const cleanup =
+                function() {
+
+                    if (
+                        script.parentNode
+                    ) {
+
+                        script.parentNode
+                            .removeChild(script);
+                    }
+
+                    try {
+
+                        delete window[
+                            callbackName
+                        ];
+
+                    } catch (error) {
+
+                        window[
+                            callbackName
+                        ] = undefined;
+                    }
+                };
+
+
+            const timeout =
+                setTimeout(
+                    function() {
+
+                        if (finished) {
+                            return;
+                        }
+
+                        finished = true;
+
+                        cleanup();
+
+                        reject(
+                            new Error(
+                                "The server did not respond. Please try again."
+                            )
+                        );
+
+                    },
+                    30000
+                );
+
+
+            window[callbackName] =
+                function(response) {
+
+                    if (finished) {
+                        return;
+                    }
+
+                    finished = true;
+
+                    clearTimeout(timeout);
+
+                    cleanup();
+
+                    resolve(response);
+                };
+
+
+            script.onerror =
+                function() {
+
+                    if (finished) {
+                        return;
+                    }
+
+                    finished = true;
+
+                    clearTimeout(timeout);
+
+                    cleanup();
+
+                    reject(
+                        new Error(
+                            "Unable to connect to the booking server."
+                        )
+                    );
+                };
+
+
+            script.src =
+                GOOGLE_APPS_SCRIPT_URL +
+                "?" +
+                params.toString();
+
+
+            document.body.appendChild(
+                script
+            );
+        }
+    );
+}
+
+
+/* =========================================
+   CHECK AVAILABILITY
+========================================= */
+
+async function checkAvailability() {
+
+    if (requestInProgress) {
+        return;
+    }
+
+    bookingAvailable =
+        false;
 
     confirmBookingBtn.disabled =
         true;
 
 
-    if (!validateAppointmentFields()) {
+    if (
+        !validateAppointmentFields()
+    ) {
         return;
     }
 
 
-    hideStatus();
+    requestInProgress =
+        true;
 
     checkAvailabilityBtn.disabled =
+        true;
+
+    confirmBookingBtn.disabled =
         true;
 
     checkAvailabilityBtn.textContent =
@@ -497,63 +688,44 @@ function checkAvailability() {
     );
 
 
-    const bookingData =
-        getBookingData();
+    try {
+
+        const data =
+            getBookingData();
 
 
-    google.script.run
-
-        .withSuccessHandler(function(result) {
-
-            console.log(
-                "Availability result:",
-                result
+        const result =
+            await callBackend(
+                "checkAvailability",
+                data
             );
 
 
-            if (result && result.available) {
-
-                bookingAvailable =
-                    true;
-
-                confirmBookingBtn.disabled =
-                    false;
+        console.log(
+            "Availability result:",
+            result
+        );
 
 
-                showStatus(
-                    "✓ Great! " +
-                    bookingData.artist +
-                    " is available at the selected time.",
-                    "success"
-                );
+        if (
+            result &&
+            result.success &&
+            result.available
+        ) {
 
-            } else {
+            bookingAvailable =
+                true;
 
-                bookingAvailable =
-                    false;
-
-                confirmBookingBtn.disabled =
-                    true;
+            confirmBookingBtn.disabled =
+                false;
 
 
-                showStatus(
-                    result &&
-                    result.message
-                        ? result.message
-                        : "Sorry, this time is already booked. Please select another time.",
-                    "error"
-                );
-            }
-
-        })
-
-        .withFailureHandler(function(error) {
-
-            console.error(
-                "Availability error:",
-                error
+            showStatus(
+                `✓ Great! ${data.artist} is available at the selected time.`,
+                "success"
             );
 
+        } else {
 
             bookingAvailable =
                 false;
@@ -563,45 +735,61 @@ function checkAvailability() {
 
 
             showStatus(
-                error &&
-                error.message
-                    ? error.message
-                    : "Unable to check calendar availability.",
+                result &&
+                result.message
+                    ? result.message
+                    : "Sorry, this time is already booked. Please select another time.",
                 "error"
             );
+        }
 
-        })
+    } catch (error) {
 
-        .checkBookingAvailability(
-            bookingData
+        console.error(
+            "Availability error:",
+            error
         );
 
 
-    /*
-       Reset button immediately.
-       Google Apps Script runs asynchronously.
-    */
+        bookingAvailable =
+            false;
 
-    setTimeout(function() {
+        confirmBookingBtn.disabled =
+            true;
+
+
+        showStatus(
+            error.message ||
+            "Unable to check calendar availability.",
+            "error"
+        );
+
+    } finally {
+
+        requestInProgress =
+            false;
 
         checkAvailabilityBtn.disabled =
             false;
 
         checkAvailabilityBtn.textContent =
             "🔍 Check Availability";
-
-    }, 500);
+    }
 }
 
 
 /* =========================================
    CONFIRM BOOKING
-   GOOGLE.SCRIPT.RUN
 ========================================= */
 
-function confirmBooking(event) {
+async function confirmBooking(event) {
 
     event.preventDefault();
+
+
+    if (requestInProgress) {
+        return;
+    }
 
 
     if (!bookingForm.checkValidity()) {
@@ -623,7 +811,14 @@ function confirmBooking(event) {
     }
 
 
+    requestInProgress =
+        true;
+
+
     confirmBookingBtn.disabled =
+        true;
+
+    checkAvailabilityBtn.disabled =
         true;
 
     confirmBookingBtn.textContent =
@@ -636,119 +831,121 @@ function confirmBooking(event) {
     );
 
 
-    const bookingData =
-        getBookingData();
+    try {
+
+        const bookingData =
+            getBookingData();
 
 
-    /*
-       Important:
-       The backend checks availability again
-       before creating the calendar event.
-    */
+        /*
+           The server performs
+           another availability check
+           while holding a lock.
+        */
 
-    google.script.run
-
-        .withSuccessHandler(function(result) {
-
-            console.log(
-                "Booking result:",
-                result
+        const result =
+            await callBackend(
+                "createBooking",
+                bookingData
             );
 
 
-            if (!result || !result.success) {
-
-                bookingAvailable =
-                    false;
-
-                showStatus(
-                    result &&
-                    result.message
-                        ? result.message
-                        : "Unable to create booking.",
-                    "error"
-                );
-
-                confirmBookingBtn.disabled =
-                    false;
-
-                confirmBookingBtn.textContent =
-                    "🌸 Confirm Booking";
-
-                return;
-            }
+        console.log(
+            "Booking result:",
+            result
+        );
 
 
-            /*
-               Booking successfully created.
-            */
-
-            showBookingSuccess(
-                bookingData,
-                result
-            );
-
-
-            hideStatus();
-
-
-            bookingForm.classList.add(
-                "hidden"
-            );
-
-            successCard.classList.remove(
-                "hidden"
-            );
-
-
-            successCard.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-
+        if (
+            !result ||
+            !result.success
+        ) {
 
             bookingAvailable =
                 false;
-
-        })
-
-        .withFailureHandler(function(error) {
-
-            console.error(
-                "Booking error:",
-                error
-            );
-
-
-            bookingAvailable =
-                false;
-
 
             showStatus(
-                error &&
-                error.message
-                    ? error.message
-                    : "Unable to create booking. Please try again.",
+                result &&
+                result.message
+                    ? result.message
+                    : "Unable to create booking.",
                 "error"
             );
 
+            return;
+        }
 
-            confirmBookingBtn.disabled =
-                false;
 
-            confirmBookingBtn.textContent =
-                "🌸 Confirm Booking";
+        /*
+           SUCCESS
+        */
 
-        })
+        bookingAvailable =
+            false;
 
-        .createHennaBooking(
-            bookingData
+
+        showBookingSuccess(
+            bookingData,
+            result
         );
+
+
+        hideStatus();
+
+
+        bookingForm.classList.add(
+            "hidden"
+        );
+
+        successCard.classList.remove(
+            "hidden"
+        );
+
+
+        successCard.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Booking error:",
+            error
+        );
+
+
+        bookingAvailable =
+            false;
+
+
+        showStatus(
+            error.message ||
+            "Unable to create booking. Please try again.",
+            "error"
+        );
+
+
+    } finally {
+
+        requestInProgress =
+            false;
+
+        checkAvailabilityBtn.disabled =
+            false;
+
+        confirmBookingBtn.disabled =
+            true;
+
+        confirmBookingBtn.textContent =
+            "🌸 Confirm Booking";
+    }
 }
 
 
 /* =========================================
-   SHOW SUCCESS
+   SUCCESS DETAILS
 ========================================= */
 
 function showBookingSuccess(
@@ -757,53 +954,90 @@ function showBookingSuccess(
 ) {
 
     const formattedDate =
-        formatDate(data.bookingDate);
+        formatDate(
+            data.bookingDate
+        );
 
     const formattedStart =
-        formatTime(data.startTime);
+        formatTime(
+            data.startTime
+        );
+
+    const endTime =
+        calculateEndTime();
+
 
     const formattedEnd =
-        formatEndTime();
+        endTime
+            ? endTime.toLocaleTimeString(
+                "en-US",
+                {
+                    hour: "numeric",
+                    minute: "2-digit"
+                }
+            )
+            : "";
 
 
     bookingDetails.innerHTML = `
 
         <strong>🌸 Booking ID:</strong>
-        ${escapeHtml(result.bookingId || "")}
+        ${escapeHtml(
+            result.bookingId || ""
+        )}
         <br>
 
         <strong>👤 Customer:</strong>
-        ${escapeHtml(data.customerName)}
+        ${escapeHtml(
+            data.customerName
+        )}
         <br>
 
         <strong>🎨 Artist:</strong>
-        ${escapeHtml(data.artist)}
+        ${escapeHtml(
+            data.artist
+        )}
         <br>
 
         <strong>✨ Service:</strong>
-        ${escapeHtml(data.service)}
+        ${escapeHtml(
+            data.service
+        )}
         <br>
 
         <strong>📅 Date:</strong>
-        ${escapeHtml(formattedDate)}
+        ${escapeHtml(
+            formattedDate
+        )}
         <br>
 
         <strong>⏰ Time:</strong>
-        ${escapeHtml(formattedStart)}
+        ${escapeHtml(
+            formattedStart
+        )}
         –
-        ${escapeHtml(formattedEnd)}
+        ${escapeHtml(
+            formattedEnd
+        )}
         <br>
 
         <strong>📍 Location:</strong>
-        ${escapeHtml(data.location)}
+        ${escapeHtml(
+            data.location
+        )}
         <br>
 
         <strong>👥 Number of People:</strong>
-        ${escapeHtml(String(data.numberOfPeople))}
+        ${escapeHtml(
+            String(data.numberOfPeople)
+        )}
         <br>
 
         <strong>📞 Phone:</strong>
-        ${escapeHtml(data.phone)}
+        ${escapeHtml(
+            data.phone
+        )}
+
     `;
 
 
@@ -815,7 +1049,7 @@ function showBookingSuccess(
 
 
 /* =========================================
-   CREATE WHATSAPP LINK
+   WHATSAPP
 ========================================= */
 
 function createWhatsAppLink(
@@ -824,13 +1058,28 @@ function createWhatsAppLink(
 ) {
 
     const formattedDate =
-        formatDate(data.bookingDate);
+        formatDate(
+            data.bookingDate
+        );
 
     const formattedStart =
-        formatTime(data.startTime);
+        formatTime(
+            data.startTime
+        );
+
+    const end =
+        calculateEndTime();
 
     const formattedEnd =
-        formatEndTime();
+        end
+            ? end.toLocaleTimeString(
+                "en-US",
+                {
+                    hour: "numeric",
+                    minute: "2-digit"
+                }
+            )
+            : "";
 
 
     const message =
@@ -866,16 +1115,6 @@ ${data.notes || "No additional notes"}
         whatsappButton.href =
             "#";
 
-        whatsappButton.onclick =
-            function(event) {
-
-                event.preventDefault();
-
-                alert(
-                    "WhatsApp number is not configured."
-                );
-            };
-
         return;
     }
 
@@ -886,7 +1125,7 @@ ${data.notes || "No additional notes"}
 
 
 /* =========================================
-   RESET AVAILABILITY
+   RESET
 ========================================= */
 
 function resetAvailability() {
@@ -896,8 +1135,6 @@ function resetAvailability() {
 
     confirmBookingBtn.disabled =
         true;
-
-    hideStatus();
 }
 
 
@@ -917,11 +1154,15 @@ function createNewBooking() {
         "hidden"
     );
 
+
     resetAvailability();
+
+    hideStatus();
 
     updateSummary();
 
     setMinimumDate();
+
 
     window.scrollTo({
         top: 0,
@@ -946,6 +1187,8 @@ function createNewBooking() {
         function() {
 
             resetAvailability();
+
+            hideStatus();
 
             updateSummary();
         }
@@ -978,3 +1221,4 @@ newBookingBtn.addEventListener(
 setMinimumDate();
 
 updateSummary();
+

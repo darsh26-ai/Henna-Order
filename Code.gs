@@ -29,7 +29,7 @@ const CONFIG = {
     */
 
     SPREADSHEET_ID:
-        "PASTE_YOUR_GOOGLE_SHEET_ID_HERE",
+        "1OX2ij1cbagSECWV4gKfJgQLKmUMbZ1i8O7F6VTQyeow",
 
 
     SHEET_NAME:
@@ -50,10 +50,10 @@ const CONFIG = {
     CALENDARS: {
 
         Nirali:
-            "PASTE_NIRALI_CALENDAR_ID_HERE",
+            "540e97f3b38f9cd5d12695552210cf07c54ae1650104300f66ea9ff6027f4615@group.calendar.google.com",
 
         Kaushika:
-            "PASTE_KAUSHIKA_CALENDAR_ID_HERE"
+            "b319db05703e81cdb63fc2dde5ad522e4355537fe2be0a9091ad1fed345e8807@group.calendar.google.com"
     },
 
 

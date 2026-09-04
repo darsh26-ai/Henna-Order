@@ -18,7 +18,7 @@
    "https://script.google.com/macros/s/AKfycbxxxxxxxx/exec";
 */
 
-const API_URL = "https://script.google.com/macros/s/AKfycbwyt1cRcwAX6ti3ShzS3LXtjKo_yhxVLwMxDnt756gd65SiWZ_YitU9qfpgStLtXlGY/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxY4aQRs4Z2LdLyvYOboexVVktzRJxUtoPbS7nR-2EFk0GhCBNBQOWcVCzf3ZfbWuu36A/exec";
 
 
 /*

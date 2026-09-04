@@ -240,14 +240,7 @@ body {
 
     position: relative;
 
-    background:
-        linear-gradient(
-            135deg,
-            #f7bdd2 0%,
-            #f2a9c5 42%,
-            #f6c5bd 72%,
-            #f8d8ad 100%
-        );
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
 
     border-radius: 24px;
 

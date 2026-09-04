@@ -71,25 +71,25 @@ body {
 
     font-family: "Poppins", sans-serif;
 
-    color: var(--text);
+    color: #2c1e17; /* Changed from color: var(--text) to your new color */
 
     background:
-        radial-gradient(
-            circle at 5% 5%,
-            rgba(242, 153, 188, 0.45),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 95% 10%,
-            rgba(214, 174, 226, 0.35),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(247, 206, 143, 0.35),
-            transparent 35%
-        ),
-        #ccfcae; /* Changed from #fff0f6 to your new color */
+    radial-gradient(
+        circle at 5% 5%,
+        rgba(143, 168, 139, 0.25), /* Soft Sage Green glow top-left */
+        transparent 35%
+    ),
+    radial-gradient(
+        circle at 95% 10%,
+        rgba(217, 198, 171, 0.35), /* Soft Warm Ochre glow top-right */
+        transparent 30%
+    ),
+    radial-gradient(
+        circle at 50% 100%,
+        rgba(196, 172, 147, 0.2), /* Muted Earthy Taupe glow at bottom */
+        transparent 40%
+    ),
+        #fbf7f0; /* Changed from #fff0f6 to your new color */
 
     overflow-x: hidden;
 }
@@ -230,6 +230,49 @@ body {
 MAIN BOOKING CARD - VIBRANT GOLD LUXURY
 
 ========================================= */
+
+.booking-card, .success-card {
+    position: relative;
+    /* Soft, luxurious sage green gradient that goes from light to deep sage */
+    background: linear-gradient(135deg, #a7bfa4 0%, #8fa88b 35%, #768f72 70%, #5d755a 100%);
+    border-radius: 24px;
+    padding: clamp(20px, 4vw, 40px);
+    /* Changed from gold to a soft, semi-transparent sage border */
+    border: 2px solid rgba(143, 168, 139, 0.4);
+    /* Changed drop shadows from vibrant yellow to a deep, natural earth-toned shadow */
+    box-shadow: 0 25px 60px rgba(44, 30, 23, 0.15), 0 10px 30px rgba(118, 143, 114, 0.12);
+    overflow: hidden;
+}
+
+/* Upper-right luxury glow (Updated to crisp white/mint glow) */
+.booking-card::before, .success-card::before {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    top: -140px;
+    right: -100px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(240, 247, 238, 0.15) 45%, transparent 75%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Lower-left organic glow (Updated from golden to a soft deep sage accent glow) */
+.booking-card::after, .success-card::after {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    bottom: -140px;
+    left: -100px;
+    background: radial-gradient(circle, rgba(93, 117, 90, 0.3) 0%, rgba(118, 143, 114, 0.1) 45%, transparent 75%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* =========================================
+Old code 
+
 .booking-card, .success-card {
     position: relative;
     background: linear-gradient( 135deg, #FFF8DC 0%, #FFE680 12%, #FFD700 35%, #FFC107 65%, #E6A800 100% );
@@ -239,7 +282,7 @@ MAIN BOOKING CARD - VIBRANT GOLD LUXURY
     box-shadow: 0 25px 60px rgba(255, 191, 0, 0.25), 0 10px 30px rgba(255, 215, 0, 0.18);
     overflow: hidden;
 }
-/* Upper-right luxury glow */
+
 .booking-card::before, .success-card::before {
     content: "";
     position: absolute;
@@ -251,7 +294,7 @@ MAIN BOOKING CARD - VIBRANT GOLD LUXURY
     border-radius: 50%;
     pointer-events: none;
 }
-/* Lower-left golden glow */
+
 .booking-card::after, .success-card::after {
     content: "";
     position: absolute;
@@ -264,6 +307,7 @@ MAIN BOOKING CARD - VIBRANT GOLD LUXURY
     pointer-events: none;
 }
 
+========================================= */
 
 /* =========================================
    SECTION HEADING

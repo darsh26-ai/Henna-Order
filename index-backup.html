@@ -1,272 +1,427 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
-    <!-- Mobile + Safari Friendly Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>Nirali's Henna Order</title>
+    <title>Henna Art Booking</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-    <!-- Flatpickr Calendar -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-    <style>
-        body {
-            
-			font-family: 'Playfair Display', serif;
-			font-style: italic;
-            background: #faf4ef;
-            margin: 0;
-            padding: 0;
-            color: #4a3b2f;
-            -webkit-text-size-adjust: 100%; /* Prevent Safari zooming text */
-        }
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
-        header {
-			background:
-			linear-gradient(135deg, rgba(181, 93, 46, 0.90), rgba(227, 158, 75, 0.90)),
-			url('pattern.png'); /* your henna pattern */
-			background-size: cover;
-			background-repeat: no-repeat;
-			background-position: center;
-			color: white;
-			padding: 35px 20px;
-			text-align: center;
-			box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-		}
-
-        header h1 {
-			color: #000000;
-            font-family: 'Great Vibes', cursive;
-            font-size: 60px;
-            margin: 0;
-        }
-
-        .subtitle {
-			color: #000000;
-            font-family: 'Great Vibes', cursive;
-            font-size: 36px;
-            margin-top: 5px;
-        }
-
-        .container {
-			background: linear-gradient(180deg, #FFF8E1, #F3D9A4);
-			max-width: 800px;
-			margin: 20px auto;
-			padding: 20px;
-			border-radius: 12px;
-			box-shadow: 0 0 12px rgba(0,0,0,0.15);
-		}
-
-        h2 {
-            border-left: none;
-            padding-left: 10px;
-            font-size: 22px;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: 600;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin-top: 5px;
-            border: 1px solid #c7b8a3;
-            border-radius: 6px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background: #8b5e3c;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 6px;
-            font-size: 18px;
-            margin-top: 20px;
-            width: 100%;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent; /* Fix iPhone tap highlight */
-        }      
-
-        .whatsapp-btn {
-            background: #25D366;
-        }		
-		
-		}
-        .gallery {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .gallery img {
-            width: 110px;
-            height: 110px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid #d8c7b8;
-        }
-
-        /* Mobile Optimizations */
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 34px;
-            }
-            .subtitle {
-                font-size: 22px;
-            }
-            .gallery img {
-                width: 90px;
-                height: 90px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-    <h1>Nirali's Henna Order</h1>
-    <p class="subtitle">Book your beautiful henna design for any occasion</p>
-</header>
+<div class="page-background"></div>
 
-<div class="container">
-    <h2>Design Gallery</h2>
-    <div class="gallery">
-        <img src="https://github.com/darsh26-ai/Henna-Order/raw/main/Image/image_1.png" alt="Design 1">
-        <img src="https://github.com/darsh26-ai/Henna-Order/raw/main/Image/image_2.png" alt="Design 2">
-        <img src="https://github.com/darsh26-ai/Henna-Order/raw/main/Image/image_1.png" alt="Design 3">
-        <img src="https://github.com/darsh26-ai/Henna-Order/raw/main/Image/image_2.png" alt="Design 4">
-    </div>
+<main class="booking-page">
 
-    <h2>Order Form</h2>
-    <form id="hennaForm" action="https://formspree.io/f/YOUR_ID" method="POST">
+    <!-- HEADER -->
+    <section class="hero">
 
-        <label>Name</label>
-        <input id="name" name="name" type="text" placeholder="Your full name" required>
+        <div class="henna-icon">🌸</div>
 
-        <label>Phone Number</label>
-        <input id="phone" name="phone" type="tel" placeholder="Your phone number" required>
+        <h1>Henna Art Booking</h1>
 
-        <label>Preferred Date & Time</label>
-		<input id="datetime" name="datetime" type="text" placeholder="Select date & time" required>
+        <p>
+            Book your Henna appointment online.
+            Available times are automatically checked before booking.
+        </p>
 
-		<!-- Popup container 
-		<div id="pickerPopup" style="
-		  display:none; position:absolute; background:#fff; padding:15px;
-		  border:1px solid #ccc; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2);
-		">
-		  <label>Select Date:</label><br>
-		  <input type="date" id="datePicker"><br><br>
-
-		  <label>Select Time:</label><br>
-		  <input type="time" id="timePicker"><br><br>
-
-		  <button id="confirmBtn">Confirm</button>
-		</div> -->
-        <label>Henna Style</label>
-        <select id="style" name="style" required>
-            <option value="">Select style</option>
-            <option>Bridal Full</option>
-            <option>Bridal Half</option>
-            <option>Arabic</option>
-            <option>Traditional</option>
-            <option>Minimal</option>
-            <option>Free style</option>
-            <option>Personal Selected design</option>
-            <option>Other</option>
-        </select>
-
-        <label>Additional Notes</label>
-		<textarea id="notes" name="notes" rows="4"  placeholder="Describe your preference or placement or how many people or how many hours"></textarea>
-
-        <button type="submit">Submit Order</button>
-
-        <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
-		  <i class="fa fa-whatsapp" style="font-size:20px;margin-right:8px;"></i>
-		  Send via WhatsApp
-		</button>
-
-    </form>
-</div>
-
-<script>
-    // Date + Time Picker (Safari Friendly)
-    flatpickr("#datetime", {
-    enableTime: true,
-    dateFormat: "Y-m-d h:i K",
-    minDate: "today",
-    time_24hr: false,
-    disableMobile: true,
-
-    onReady: function(selectedDates, dateStr, instance) {
-        const confirmBtn = document.createElement("button");
-        confirmBtn.textContent = "Confirm";
-
-        // Green button
-        confirmBtn.style.backgroundColor = "green";
-        confirmBtn.style.color = "white";
-        confirmBtn.style.marginTop = "10px";
-        confirmBtn.style.width = "100%";
-        confirmBtn.style.padding = "10px";
-        confirmBtn.style.border = "none";
-        confirmBtn.style.borderRadius = "6px";
-        confirmBtn.style.cursor = "pointer";
-
-        confirmBtn.addEventListener("click", function() {
-            instance.close();
-        });
-
-        instance.calendarContainer.appendChild(confirmBtn);
-    }
-});
+    </section>
 
 
+    <!-- BOOKING CARD -->
+    <section class="booking-card">
 
-    // WhatsApp Auto Message
-    function sendWhatsApp() {
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const datetime = document.getElementById("datetime").value;
-    const style = document.getElementById("style").value;
-    const notes = document.getElementById("notes").value;
+        <div class="section-heading">
 
-    const message = encodeURIComponent(
-        `Hello, I would like to book a henna appointment.
-		Name: ${name}
-		Phone: ${phone}
-		Preferred Date & Time: ${datetime}
-		Style: ${style}
-		Notes: ${notes}`
-    );
+            <h2>Book Your Appointment</h2>
 
-    const whatsappNumber = "7279676639";
+            <p>Please fill in your details below.</p>
 
-    window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
-
-    document.getElementById("hennaForm").reset();
-}
+        </div>
 
 
-	document.getElementById("hennaForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // stop page reload
-    this.reset();       // clear all fields
-    alert("Form submitted successfully!"); // optional message
-});
+        <!-- STATUS -->
+        <div id="statusMessage"
+             class="status-message hidden">
+        </div>
 
-</script>
+
+        <!-- BOOKING FORM -->
+        <form id="bookingForm">
+
+            <!-- CUSTOMER -->
+            <div class="form-group">
+
+                <label for="customerName">
+                    Full Name <span>*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Enter your full name"
+                    required>
+
+            </div>
+
+
+            <!-- PHONE -->
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number <span>*</span>
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter your phone number"
+                    required>
+
+            </div>
+
+
+            <!-- EMAIL -->
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email address">
+
+            </div>
+
+
+            <!-- ARTIST -->
+            <div class="form-group">
+
+                <label for="artist">
+                    Henna Artist <span>*</span>
+                </label>
+
+                <select id="artist" required>
+
+                    <option value="">
+                        Select Henna Artist
+                    </option>
+
+                    <option value="Nirali">
+                        Nirali
+                    </option>
+
+                    <option value="Kaushika">
+                        Kaushika
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SERVICE -->
+            <div class="form-group">
+
+                <label for="service">
+                    Henna Service <span>*</span>
+                </label>
+
+                <select id="service" required>
+
+                    <option value="">
+                        Select a service
+                    </option>
+
+                    <option value="Bridal Henna">
+                        Bridal Henna
+                    </option>
+
+                    <option value="Party Henna">
+                        Party Henna
+                    </option>
+
+                    <option value="Engagement Henna">
+                        Engagement Henna
+                    </option>
+
+                    <option value="Baby Shower Henna">
+                        Baby Shower Henna
+                    </option>
+
+                    <option value="Festival Henna">
+                        Festival Henna
+                    </option>
+
+                    <option value="Group Henna">
+                        Group Henna
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- DATE -->
+            <div class="form-group">
+
+                <label for="bookingDate">
+                    Event Date <span>*</span>
+                </label>
+
+                <input
+                    type="date"
+                    id="bookingDate"
+                    required>
+
+            </div>
+
+
+            <!-- START TIME -->
+            <div class="form-group">
+
+                <label for="startTime">
+                    Start Time <span>*</span>
+                </label>
+
+                <input
+                    type="time"
+                    id="startTime"
+                    required>
+
+            </div>
+
+
+            <!-- DURATION -->
+            <div class="form-group">
+
+                <label for="duration">
+                    Appointment Duration <span>*</span>
+                </label>
+
+                <select id="duration" required>
+
+                    <option value="">
+                        Select duration
+                    </option>
+
+                    <option value="1">
+                        1 Hour
+                    </option>
+
+                    <option value="1.5">
+                        1 Hour 30 Minutes
+                    </option>
+
+                    <option value="2">
+                        2 Hours
+                    </option>
+
+                    <option value="2.5">
+                        2 Hours 30 Minutes
+                    </option>
+
+                    <option value="3">
+                        3 Hours
+                    </option>
+
+                    <option value="4">
+                        4 Hours
+                    </option>
+
+                    <option value="5">
+                        5 Hours
+                    </option>
+
+                    <option value="6">
+                        6 Hours
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- PEOPLE -->
+            <div class="form-group">
+
+                <label for="numberOfPeople">
+                    Number of People <span>*</span>
+                </label>
+
+                <input
+                    type="number"
+                    id="numberOfPeople"
+                    min="1"
+                    value="1"
+                    required>
+
+            </div>
+
+
+            <!-- LOCATION -->
+            <div class="form-group full-width">
+
+                <label for="location">
+                    Event Location <span>*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Enter event address or city"
+                    required>
+
+            </div>
+
+
+            <!-- NOTES -->
+            <div class="form-group full-width">
+
+                <label for="notes">
+                    Additional Notes
+                </label>
+
+                <textarea
+                    id="notes"
+                    rows="4"
+                    placeholder="Tell us anything important about your booking..."></textarea>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="booking-summary full-width">
+
+                <h3>
+                    📅 Appointment Summary
+                </h3>
+
+                <div id="summaryContent">
+                    Select an artist, date, time and duration.
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+            <div class="button-area full-width">
+
+                <button
+                    type="button"
+                    id="checkAvailabilityBtn"
+                    class="secondary-button">
+
+                    🔍 Check Availability
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    id="confirmBookingBtn"
+                    class="primary-button"
+                    disabled>
+
+                    🌸 Confirm Booking
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- SUCCESS -->
+    <section
+        id="successCard"
+        class="success-card hidden">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>🌸 Calendar Blocked!</h2>
+            <p>
+                Your requested time has been reserved.
+            </p>
+            <p>
+                <strong>
+                    Please make a deposit to confirm your booking.
+                </strong>
+            </p>
+
+        <p>
+            Your Henna appointment has been successfully added.
+        </p>
+
+
+        <div
+            id="bookingDetails"
+            class="booking-details">
+        </div>
+
+
+        <a
+            id="whatsappButton"
+            href="#"
+            target="_blank"
+            rel="noopener"
+            class="whatsapp-button">
+
+            💬 Open WhatsApp Booking Message
+
+        </a>
+
+
+        <button
+            id="newBookingBtn"
+            class="secondary-button">
+
+            + Create Another Booking
+
+        </button>
+
+    </section>
+
+
+    <footer>
+
+        <p>
+            🌸 Henna Art Booking
+        </p>
+
+    </footer>
+
+</main>
+
+
+<script src="app.js"></script>
 
 </body>
 </html>

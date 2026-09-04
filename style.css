@@ -4,20 +4,44 @@
 
 :root {
     --primary: #7a1f4b;
-    --primary-dark: #571231;
-    --secondary: #c57a9b;
-    --accent: #f3d6e2;
-    --light: #fff9fb;
-    --white: #ffffff;
+    --primary-dark: #4d1230;
+
+    --secondary: #c43d78;
+    --pink: #e88caf;
+    --rose: #f3b5c9;
+
+    --gold: #c58a32;
+    --gold-light: #f7dfaa;
+
+    --accent: #f5cada;
+
+    --light: #fff0f6;
+
+    --card-start: #fff0f6;
+    --card-middle: #fde3ed;
+    --card-end: #fff4df;
+
+    --input-bg: #fff8fb;
+
     --text: #35202a;
     --muted: #74616a;
-    --border: #ead8e0;
+
+    --border: #e5b7c9;
+
     --success: #287a4d;
     --success-bg: #e8f7ee;
+
     --error: #b3261e;
     --error-bg: #fdecea;
-    --shadow: 0 15px 40px rgba(80, 25, 50, 0.12);
+
+    --shadow:
+        0 18px 45px rgba(80, 25, 50, 0.18);
 }
+
+
+/* =========================================
+   GLOBAL RESET
+========================================= */
 
 * {
     box-sizing: border-box;
@@ -33,33 +57,76 @@ html {
 body {
     min-height: 100vh;
     width: 100%;
+
     font-family: "Poppins", sans-serif;
+
     color: var(--text);
-    background: var(--light);
+
+    background:
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(242, 153, 188, 0.35),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 95% 10%,
+            rgba(214, 157, 222, 0.30),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(247, 206, 143, 0.28),
+            transparent 35%
+        ),
+        #fff3f8;
+
     overflow-x: hidden;
 }
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
 
 .page-background {
     position: fixed;
     inset: 0;
+
     z-index: -1;
 
     background:
         radial-gradient(
             circle at top left,
-            rgba(243, 214, 226, 0.8),
-            transparent 35%
+            rgba(246, 182, 207, 0.55),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at top right,
+            rgba(215, 174, 226, 0.30),
+            transparent 30%
         ),
         radial-gradient(
             circle at bottom right,
-            rgba(197, 122, 155, 0.2),
-            transparent 40%
+            rgba(247, 203, 143, 0.25),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom left,
+            rgba(205, 117, 157, 0.15),
+            transparent 30%
         );
 }
 
+
+/* =========================================
+   PAGE CONTAINER
+========================================= */
+
 .booking-page {
     width: min(100% - 30px, 1000px);
+
     margin: 0 auto;
+
     padding: 35px 0 50px;
 }
 
@@ -69,56 +136,221 @@ body {
 ========================================= */
 
 .hero {
+    position: relative;
+
     text-align: center;
+
     margin-bottom: 30px;
+
+    padding: 10px 15px 5px;
 }
 
-.henna-icon {
-    font-size: 50px;
-    margin-bottom: 8px;
+
+/* Decorative glow behind flower */
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    top: -50px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(236, 139, 177, 0.25),
+            transparent 70%
+        );
+
+    border-radius: 50%;
+
+    z-index: -1;
 }
+
+
+.henna-icon {
+    font-size: 52px;
+
+    margin-bottom: 8px;
+
+    filter:
+        drop-shadow(
+            0 5px 8px rgba(122, 31, 75, 0.20)
+        );
+}
+
 
 .hero h1 {
     font-family: "Playfair Display", serif;
+
     color: var(--primary);
+
     font-size: clamp(2rem, 5vw, 3.4rem);
+
     margin-bottom: 10px;
+
+    text-shadow:
+        0 3px 10px rgba(122, 31, 75, 0.10);
 }
+
 
 .hero p {
     max-width: 650px;
+
     margin: auto;
+
     color: var(--muted);
+
     line-height: 1.7;
+
+    font-size: 0.96rem;
 }
 
 
 /* =========================================
-   CARDS
+   MAIN CARDS
 ========================================= */
 
 .booking-card,
 .success-card {
-    background: var(--white);
-    border-radius: 22px;
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--card-start) 0%,
+            var(--card-middle) 48%,
+            var(--card-end) 100%
+        );
+
+    border-radius: 24px;
+
     padding: clamp(20px, 4vw, 40px);
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(122, 31, 75, 0.08);
+
+    border: 1px solid rgba(196, 61, 120, 0.20);
+
+    box-shadow:
+        0 20px 55px rgba(80, 25, 50, 0.18),
+        0 5px 20px rgba(196, 61, 120, 0.08);
+
+    overflow: hidden;
 }
+
+
+/* Decorative corner glow */
+
+.booking-card::before,
+.success-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    top: -130px;
+    right: -100px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(227, 117, 160, 0.28),
+            transparent 70%
+        );
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+/* Bottom decorative glow */
+
+.booking-card::after,
+.success-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    bottom: -120px;
+    left: -80px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(247, 193, 103, 0.22),
+            transparent 70%
+        );
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   SECTION HEADING
+========================================= */
 
 .section-heading {
+    position: relative;
+
     margin-bottom: 25px;
+
+    padding-bottom: 15px;
 }
 
+
 .section-heading h2 {
+
     font-family: "Playfair Display", serif;
+
     font-size: 1.9rem;
+
     color: var(--primary);
+
     margin-bottom: 6px;
 }
 
+
 .section-heading p {
     color: var(--muted);
+}
+
+
+/* Gold decorative line */
+
+.section-heading::after {
+
+    content: "";
+
+    display: block;
+
+    width: 65px;
+    height: 3px;
+
+    margin-top: 12px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--secondary),
+            var(--gold)
+        );
 }
 
 
@@ -127,125 +359,256 @@ body {
 ========================================= */
 
 #bookingForm {
+
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
     gap: 20px;
 }
 
+
 .form-group {
+
     display: flex;
+
     flex-direction: column;
+
     min-width: 0;
 }
+
 
 .full-width {
     grid-column: 1 / -1;
 }
 
+
+/* =========================================
+   LABELS
+========================================= */
+
 label {
+
     font-weight: 600;
+
     margin-bottom: 8px;
+
     font-size: 0.93rem;
+
+    color: var(--primary-dark);
 }
 
+
 label span {
-    color: var(--primary);
+    color: var(--secondary);
 }
+
+
+/* =========================================
+   INPUTS
+========================================= */
 
 input,
 select,
 textarea {
+
     width: 100%;
+
     max-width: 100%;
 
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    border:
+        1px solid var(--border);
+
+    border-radius: 13px;
 
     padding: 13px 14px;
 
     font: inherit;
+
     color: var(--text);
 
-    background: #fff;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.85),
+            var(--input-bg)
+        );
 
     outline: none;
 
+    box-shadow:
+        inset 0 1px 3px rgba(122, 31, 75, 0.04);
+
     transition:
         border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
 }
+
 
 textarea {
     resize: vertical;
 }
 
+
+/* Input hover */
+
+input:hover,
+select:hover,
+textarea:hover {
+
+    border-color: var(--pink);
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8fb,
+            #fff1f6
+        );
+}
+
+
+/* Input focus */
+
 input:focus,
 select:focus,
 textarea:focus {
-    border-color: var(--primary);
+
+    border-color: var(--secondary);
+
+    background: #fffafd;
 
     box-shadow:
-        0 0 0 4px rgba(122, 31, 75, 0.1);
+        0 0 0 4px rgba(196, 61, 120, 0.10),
+        0 6px 18px rgba(196, 61, 120, 0.08);
+
+    transform: translateY(-1px);
 }
 
 
 /* =========================================
-   SUMMARY
+   SELECT DROPDOWNS
+========================================= */
+
+select {
+    cursor: pointer;
+}
+
+
+/* =========================================
+   APPOINTMENT SUMMARY
 ========================================= */
 
 .booking-summary {
+
+    position: relative;
+
     width: 100%;
 
     background:
         linear-gradient(
             135deg,
-            #fff4f8,
-            #fffafa
+            #fff0f6,
+            #ffe5ef 50%,
+            #fff1d8
         );
 
-    border: 1px solid var(--accent);
+    border:
+        1px solid rgba(197, 138, 50, 0.35);
 
-    border-radius: 15px;
+    border-radius: 17px;
 
-    padding: 18px;
+    padding: 20px;
 
     overflow-wrap: anywhere;
+
+    box-shadow:
+        0 8px 25px rgba(122, 31, 75, 0.08);
 }
+
+
+/* Gold accent */
+
+.booking-summary::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 15px;
+    bottom: 15px;
+
+    width: 4px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--secondary),
+            var(--gold)
+        );
+}
+
 
 .booking-summary h3 {
+
     color: var(--primary);
+
     margin-bottom: 10px;
+
+    padding-left: 4px;
 }
 
+
 #summaryContent {
+
     color: var(--muted);
+
     line-height: 1.7;
+
+    padding-left: 4px;
 }
 
 
 /* =========================================
-   BUTTONS
+   BUTTON AREA
 ========================================= */
 
 .button-area {
+
     display: flex;
+
     gap: 15px;
+
     flex-wrap: wrap;
 }
 
+
+/* =========================================
+   ALL BUTTONS
+========================================= */
+
 button,
 .whatsapp-button {
+
     border: none;
-    border-radius: 12px;
+
+    border-radius: 13px;
 
     padding: 14px 20px;
 
     font: inherit;
+
     font-weight: 600;
 
     cursor: pointer;
 
     text-decoration: none;
+
     text-align: center;
 
     transition:
@@ -254,17 +617,34 @@ button,
         opacity 0.2s ease;
 }
 
+
 button:hover,
 .whatsapp-button:hover {
-    transform: translateY(-2px);
+
+    transform: translateY(-3px);
 }
+
+
+button:active,
+.whatsapp-button:active {
+
+    transform: translateY(0);
+}
+
 
 button:disabled {
     cursor: not-allowed;
 }
 
+
+/* =========================================
+   CONFIRM BOOKING BUTTON
+========================================= */
+
 .primary-button {
+
     flex: 1;
+
     min-width: 220px;
 
     color: white;
@@ -272,128 +652,292 @@ button:disabled {
     background:
         linear-gradient(
             135deg,
-            var(--primary),
-            #a33d6d
+            #7a1f4b,
+            #b52e70,
+            #d04f87
         );
 
     box-shadow:
-        0 8px 18px rgba(122, 31, 75, 0.25);
+        0 10px 22px rgba(122, 31, 75, 0.28),
+        0 0 0 rgba(196, 61, 120, 0);
 }
+
+
+/* Hover glow */
+
+.primary-button:hover {
+
+    box-shadow:
+        0 12px 28px rgba(122, 31, 75, 0.32),
+        0 0 18px rgba(196, 61, 120, 0.18);
+}
+
+
+/* Disabled */
 
 .primary-button:disabled {
+
     opacity: 0.45;
+
     transform: none;
-}
 
-.secondary-button {
-    flex: 1;
-    min-width: 220px;
-
-    color: var(--primary);
-
-    background: #fff;
-
-    border: 1px solid var(--primary);
-}
-
-.whatsapp-button {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-
-    color: white;
-    background: #25d366;
+    box-shadow: none;
 }
 
 
 /* =========================================
-   STATUS
+   CHECK AVAILABILITY BUTTON
+========================================= */
+
+.secondary-button {
+
+    flex: 1;
+
+    min-width: 220px;
+
+    color: var(--primary);
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8fb,
+            #ffeaf2
+        );
+
+    border:
+        1px solid var(--secondary);
+
+    box-shadow:
+        0 6px 15px rgba(122, 31, 75, 0.08);
+}
+
+
+.secondary-button:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe6f0,
+            #fff1d8
+        );
+
+    box-shadow:
+        0 8px 20px rgba(122, 31, 75, 0.14);
+}
+
+
+/* =========================================
+   WHATSAPP BUTTON
+========================================= */
+
+.whatsapp-button {
+
+    display: block;
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #18b957,
+            #25d366,
+            #35df78
+        );
+
+    box-shadow:
+        0 8px 20px rgba(37, 211, 102, 0.25);
+}
+
+
+.whatsapp-button:hover {
+
+    box-shadow:
+        0 10px 25px rgba(37, 211, 102, 0.32);
+}
+
+
+/* =========================================
+   STATUS MESSAGE
 ========================================= */
 
 .status-message {
+
     margin-bottom: 20px;
 
     padding: 14px 16px;
 
-    border-radius: 12px;
+    border-radius: 13px;
 
     font-weight: 500;
 
     overflow-wrap: anywhere;
 }
 
+
+/* Success */
+
 .status-message.success {
-    background: var(--success-bg);
+
+    background:
+        linear-gradient(
+            135deg,
+            #e7f8ed,
+            #f1fff6
+        );
+
     color: var(--success);
 
     border:
-        1px solid rgba(40, 122, 77, 0.2);
+        1px solid rgba(40, 122, 77, 0.25);
+
+    box-shadow:
+        0 5px 15px rgba(40, 122, 77, 0.08);
 }
 
+
+/* Error */
+
 .status-message.error {
-    background: var(--error-bg);
+
+    background:
+        linear-gradient(
+            135deg,
+            #fde9e7,
+            #fff3f1
+        );
+
     color: var(--error);
 
     border:
-        1px solid rgba(179, 38, 30, 0.2);
+        1px solid rgba(179, 38, 30, 0.22);
 }
 
+
+/* Loading */
+
 .status-message.loading {
-    background: #fff8dc;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff4d4,
+            #fff9ea
+        );
+
     color: #7b5c00;
+
+    border:
+        1px solid rgba(197, 138, 50, 0.25);
 }
 
 
 /* =========================================
-   SUCCESS
+   SUCCESS CARD
 ========================================= */
 
 .success-card {
+
     margin-top: 30px;
+
     text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff0f6,
+            #fbe1ed 45%,
+            #fff0d2
+        );
 }
 
+
+/* =========================================
+   SUCCESS ICON
+========================================= */
+
 .success-icon {
-    width: 70px;
-    height: 70px;
+
+    width: 75px;
+    height: 75px;
 
     margin: 0 auto 15px;
 
     display: grid;
+
     place-items: center;
 
     border-radius: 50%;
 
-    background: var(--success-bg);
+    background:
+        linear-gradient(
+            135deg,
+            #dff7e8,
+            #effff5
+        );
+
     color: var(--success);
 
     font-size: 2rem;
+
     font-weight: 700;
+
+    border:
+        3px solid rgba(40, 122, 77, 0.12);
+
+    box-shadow:
+        0 8px 20px rgba(40, 122, 77, 0.12);
 }
 
+
 .success-card h2 {
+
     color: var(--success);
+
     margin-bottom: 8px;
+
+    font-family: "Playfair Display", serif;
 }
+
 
 .success-card > p {
     color: var(--muted);
 }
 
+
+/* =========================================
+   BOOKING DETAILS
+========================================= */
+
 .booking-details {
+
     margin-top: 22px;
 
     padding: 20px;
 
-    border-radius: 15px;
+    border-radius: 16px;
 
-    background: #fff9fb;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.78),
+            rgba(255, 240, 247, 0.92)
+        );
+
+    border:
+        1px solid rgba(196, 61, 120, 0.15);
 
     text-align: left;
 
     line-height: 1.9;
 
     overflow-wrap: anywhere;
+
+    box-shadow:
+        inset 0 1px 8px rgba(122, 31, 75, 0.04);
 }
 
 
@@ -405,13 +949,22 @@ button:disabled {
     display: none !important;
 }
 
+
+/* =========================================
+   FOOTER
+========================================= */
+
 footer {
+
     text-align: center;
+
     margin-top: 25px;
 
-    color: var(--muted);
+    color: var(--primary);
 
     font-size: 0.9rem;
+
+    font-weight: 500;
 }
 
 
@@ -422,55 +975,88 @@ footer {
 @media (max-width: 700px) {
 
     .booking-page {
+
         width: calc(100% - 20px);
+
         max-width: 100%;
+
         padding-top: 20px;
     }
 
+
     #bookingForm {
+
         grid-template-columns: 1fr;
+
         gap: 18px;
     }
 
+
     .full-width {
+
         grid-column: auto;
     }
 
+
     .button-area {
+
         flex-direction: column;
     }
 
+
     .primary-button,
     .secondary-button {
+
         width: 100%;
+
         min-width: 0;
+
         flex: none;
     }
 
+
     .booking-card,
     .success-card {
+
         width: 100%;
-        border-radius: 16px;
+
+        border-radius: 18px;
+
         padding: 20px;
     }
 
+
     .hero h1 {
+
         font-size: 2rem;
     }
 
+
     .hero p {
+
         font-size: 0.9rem;
     }
+
 
     input,
     select,
     textarea {
+
         font-size: 16px;
     }
 
+
     .booking-details {
+
         padding: 16px;
+
         font-size: 0.92rem;
+    }
+
+
+    .booking-summary {
+
+        padding: 17px;
     }
 }
 
@@ -482,19 +1068,26 @@ footer {
 @media (max-width: 380px) {
 
     .booking-page {
+
         width: calc(100% - 12px);
     }
 
+
     .booking-card,
     .success-card {
+
         padding: 15px;
     }
 
+
     .hero h1 {
+
         font-size: 1.8rem;
     }
 
+
     .booking-summary {
+
         padding: 14px;
     }
 }

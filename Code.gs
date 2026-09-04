@@ -76,9 +76,26 @@ const CONFIG = {
 ========================================= */
 
 function doGet() {
-  return HtmlService.createHtmlOutputFromFile('index')
-    .setTitle('Henna Art Booking');
+    return HtmlService
+        .createTemplateFromFile("index")
+        .evaluate()
+        .setTitle("Henna Art Booking");
 }
+
+
+/* =========================================
+   INCLUDE HTML FILES
+========================================= */
+
+function include(filename) {
+    return HtmlService
+        .createHtmlOutputFromFile(filename)
+        .getContent();
+}
+
+/* =========================================
+   GOOGLE SCRIPT RUN WRAPPERS
+========================================= */
 
 function checkBookingAvailability(data) {
 
@@ -107,14 +124,6 @@ function createHennaBooking(data) {
 
     const result =
         handleCreateBooking(data);
-
-    /*
-       handleCreateBooking() currently returns
-       a JSON TextOutput object.
-
-       Convert it back into a normal JavaScript
-       object for google.script.run.
-    */
 
     return JSON.parse(
         result.getContent()
@@ -810,37 +819,4 @@ function createJsonResponse(data) {
         .setMimeType(
             ContentService.MimeType.JSON
         );
-}
-
-/* =========================================
-   GOOGLE SCRIPT RUN WRAPPERS
-========================================= */
-
-function checkBookingAvailability(data) {
-    validateAction({
-        ...data,
-        action: "checkAvailability"
-    });
-
-    const result = checkAvailability(data);
-
-    return {
-        success: true,
-        available: result.available,
-        message: result.message
-    };
-}
-
-
-function createHennaBooking(data) {
-    validateAction({
-        ...data,
-        action: "createBooking"
-    });
-
-    const result = handleCreateBooking(data);
-
-    return JSON.parse(
-        result.getContent()
-    );
 }
